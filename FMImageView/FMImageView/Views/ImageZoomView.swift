@@ -9,18 +9,6 @@
 import UIKit
 import AVFoundation
 
-public struct ConfigureZoomView {
-    public var _imageContentMode: ContentMode
-    public var _initialOffset: Offset
-    public var _maxScaleFromMinScale: CGFloat
-    
-    public init(imageContentMode: ContentMode?, initialOffset: Offset?, maxScaleFromMinScale: CGFloat?) {
-        self._imageContentMode = imageContentMode ?? .aspectFit
-        self._initialOffset = initialOffset ?? .center
-        self._maxScaleFromMinScale = maxScaleFromMinScale ?? Constants.Scale.cMax
-    }
-}
-
 class ImageZoomView: UIScrollView {
 
     var _imageView: UIImageView?
@@ -82,7 +70,7 @@ class ImageZoomView: UIScrollView {
             
             frame.origin.y = touchPoint.y - initialTouchPoint.y
         case .ended, .cancelled, .failed:
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
                 self.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
             })
         default:

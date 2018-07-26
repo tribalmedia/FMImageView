@@ -28,4 +28,8 @@ struct Constants {
         static let cMax: CGFloat = 3.0
         static let cMin: CGFloat = 1.0
     }
+    
+    struct AnimationDuration {
+        static let defaultDuration: Double = 0.375
+    }
 }

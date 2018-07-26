@@ -12,16 +12,19 @@ protocol Move: class {
     func moving(_ sender: UIPanGestureRecognizer)
 }
 
-extension ImagePreviewViewController: Move {
+extension FMImagePreviewViewController: Move {
     func moving(_ sender: UIPanGestureRecognizer) {
         self.scrollView.moveScrollViewFrame(sender)
     }
 }
 
-class ImagePreviewViewController: UIViewController {
+class FMImagePreviewViewController: UIViewController {
     var itemIndex: Int = -1
-    var image: UIImage!
-    var imageURL: URL!
+    
+    var image: UIImage?
+    
+    var imageURL: URL?
+    
     var scrollView: ImageZoomView!
     
     var slideStatus: SlideStatus? {
@@ -33,7 +36,7 @@ class ImagePreviewViewController: UIViewController {
     
     weak var _delegate: ImageSlideFMDelegate?
     
-    var parentVC: ImageSlideViewController?
+    var parentVC: FMImageSlideViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +48,7 @@ class ImagePreviewViewController: UIViewController {
         scrollView._delegate = self
         
         FMAlert.shared.__delegate = self
-
+        
         self.view = scrollView
         
         if let fromImage = self.image {
@@ -72,6 +75,10 @@ class ImagePreviewViewController: UIViewController {
     }
     
     private func updateImage() {
+        guard let imageURL = self.imageURL else {
+            return
+        }
+        
         DispatchQueue.main.async {
             FMLoadingView.shared.show()
         }
@@ -86,6 +93,7 @@ class ImagePreviewViewController: UIViewController {
             if let image = image {
                 self.scrollView.displayImage(image)
             }
+            
             DispatchQueue.main.async {
                 FMLoadingView.shared.hide()
             }
@@ -103,10 +111,10 @@ class ImagePreviewViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
 }
 
-extension ImagePreviewViewController: RefreshProtocol {
+extension FMImagePreviewViewController: RefreshProtocol {
     func refreshHandling() {
         DispatchQueue.main.async {
             FMAlert.shared.hide()
@@ -116,7 +124,7 @@ extension ImagePreviewViewController: RefreshProtocol {
 }
 
 
-extension ImagePreviewViewController: ImagePreviewFMDelegate {
+extension FMImagePreviewViewController: ImagePreviewFMDelegate {
     func notificationHandlingModal(type: TypeName.Modal) {
         self._delegate?.handlingModal(type: type)
     }
@@ -124,7 +132,7 @@ extension ImagePreviewViewController: ImagePreviewFMDelegate {
     func notificationHandlingSwipe(type: TypeName.Swipe) {
         self._delegate?.handlingSwipe(type: type)
     }
-
+    
     func notificationHandlingElasticityOfTopViewAndBottomView(type: TypeName.Elasticity) {
         self._delegate?.handlingElasticityOfTopViewAndBottomView(type: type)
     }

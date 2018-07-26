@@ -37,12 +37,12 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
     public var getOriginFrame: (() -> CGRect)!
     
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return Constants.AnimationDuration.defaultDuration
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toVC = transitionContext.viewController(forKey: .to) as? ImageSlideViewController,
-            let photoVC = toVC.pageViewController?.viewControllers?.first as? ImagePreviewViewController
+        guard let toVC = transitionContext.viewController(forKey: .to) as? FMImageSlideViewController,
+            let photoVC = toVC.pageViewController?.viewControllers?.first as? FMImagePreviewViewController
             else { return }
         
         let containerView = transitionContext.containerView

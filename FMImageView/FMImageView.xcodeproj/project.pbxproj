@@ -22,8 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		090BFED320E36DBF00819FBF /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED220E36DBF00819FBF /* ImageZoomView.swift */; };
-		090BFED520E36E2C00819FBF /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED420E36E2C00819FBF /* ImagePreviewViewController.swift */; };
-		090BFED720E36ED700819FBF /* ImageSlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED620E36ED700819FBF /* ImageSlideViewController.swift */; };
+		090BFED520E36E2C00819FBF /* FMImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED420E36E2C00819FBF /* FMImagePreviewViewController.swift */; };
+		090BFED720E36ED700819FBF /* FMImageSlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED620E36ED700819FBF /* FMImageSlideViewController.swift */; };
 		090BFEF420E3A30E00819FBF /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFEF320E3A30E00819FBF /* UIImage.swift */; };
 		091922F120EA0E82009EC24B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F020EA0E82009EC24B /* ImageLoader.swift */; };
 		091922F320EA1217009EC24B /* FMLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F220EA1217009EC24B /* FMLoadingView.swift */; };
@@ -41,7 +41,9 @@
 		09919DBE20EE088500FF4874 /* FMDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */; };
 		09B0DCBC20E20F0100CB7DD3 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B0DCBB20E20F0100CB7DD3 /* CGSize.swift */; };
 		09B0DCBE20E20F1500CB7DD3 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */; };
-		09F663C720DCAB9000AB2B8A /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F663C620DCAB9000AB2B8A /* ImageView.swift */; };
+		09BA00E221096D010095186C /* FMImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BA00E121096D010095186C /* FMImageDataSource.swift */; };
+		09BA00E521096D270095186C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BA00E421096D270095186C /* Config.swift */; };
+		09BA00E721096D480095186C /* ConfigureZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BA00E621096D480095186C /* ConfigureZoomView.swift */; };
 		09FD300D20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */; };
 		09FD301020F5DA6600DC132E /* FMZoomInAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */; };
 		09FD301220F5DA7A00DC132E /* FMZoomOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */; };
@@ -59,8 +61,8 @@
 
 /* Begin PBXFileReference section */
 		090BFED220E36DBF00819FBF /* ImageZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
-		090BFED420E36E2C00819FBF /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
-		090BFED620E36ED700819FBF /* ImageSlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlideViewController.swift; sourceTree = "<group>"; };
+		090BFED420E36E2C00819FBF /* FMImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMImagePreviewViewController.swift; sourceTree = "<group>"; };
+		090BFED620E36ED700819FBF /* FMImageSlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMImageSlideViewController.swift; sourceTree = "<group>"; };
 		090BFEF320E3A30E00819FBF /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		091922F020EA0E82009EC24B /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		091922F220EA1217009EC24B /* FMLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMLoadingView.swift; sourceTree = "<group>"; };
@@ -81,7 +83,9 @@
 		09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDelegateProtocol.swift; sourceTree = "<group>"; };
 		09B0DCBB20E20F0100CB7DD3 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
 		09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
-		09F663C620DCAB9000AB2B8A /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		09BA00E121096D010095186C /* FMImageDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMImageDataSource.swift; sourceTree = "<group>"; };
+		09BA00E421096D270095186C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		09BA00E621096D480095186C /* ConfigureZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureZoomView.swift; sourceTree = "<group>"; };
 		09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMPhotoInteractionAnimator.swift; sourceTree = "<group>"; };
 		09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMZoomInAnimationController.swift; sourceTree = "<group>"; };
 		09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMZoomOutAnimationController.swift; sourceTree = "<group>"; };
@@ -109,10 +113,12 @@
 		090BFED120E36D7D00819FBF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				09BA00E321096D170095186C /* Config */,
+				09BA00E021096CE20095186C /* Datasource */,
 				0957AD5120EB144400616929 /* Subviews */,
 				090BFED220E36DBF00819FBF /* ImageZoomView.swift */,
-				090BFED420E36E2C00819FBF /* ImagePreviewViewController.swift */,
-				090BFED620E36ED700819FBF /* ImageSlideViewController.swift */,
+				090BFED420E36E2C00819FBF /* FMImagePreviewViewController.swift */,
+				090BFED620E36ED700819FBF /* FMImageSlideViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -213,10 +219,26 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		09BA00E021096CE20095186C /* Datasource */ = {
+			isa = PBXGroup;
+			children = (
+				09BA00E121096D010095186C /* FMImageDataSource.swift */,
+			);
+			path = Datasource;
+			sourceTree = "<group>";
+		};
+		09BA00E321096D170095186C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				09BA00E421096D270095186C /* Config.swift */,
+				09BA00E621096D480095186C /* ConfigureZoomView.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		09F663C520DCAB7400AB2B8A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				09F663C620DCAB9000AB2B8A /* ImageView.swift */,
 				09B0DCBB20E20F0100CB7DD3 /* CGSize.swift */,
 				09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */,
 				090BFEF320E3A30E00819FBF /* UIImage.swift */,
@@ -365,23 +387,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09F663C720DCAB9000AB2B8A /* ImageView.swift in Sources */,
 				09FD300D20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift in Sources */,
+				09BA00E221096D010095186C /* FMImageDataSource.swift in Sources */,
 				0957AD5520EB399C00616929 /* Constants.swift in Sources */,
 				091922F320EA1217009EC24B /* FMLoadingView.swift in Sources */,
 				096953E720B52C290057BFEE /* Image+URL+Size.swift in Sources */,
 				09906A1B20E60BFC00C06D69 /* UIPanGestureRecognizer.swift in Sources */,
 				09B0DCBC20E20F0100CB7DD3 /* CGSize.swift in Sources */,
-				090BFED520E36E2C00819FBF /* ImagePreviewViewController.swift in Sources */,
+				090BFED520E36E2C00819FBF /* FMImagePreviewViewController.swift in Sources */,
 				09FD301020F5DA6600DC132E /* FMZoomInAnimationController.swift in Sources */,
 				09B0DCBE20E20F1500CB7DD3 /* CGPoint.swift in Sources */,
 				090BFED320E36DBF00819FBF /* ImageZoomView.swift in Sources */,
 				09FD301220F5DA7A00DC132E /* FMZoomOutAnimationController.swift in Sources */,
 				096953E920B5531C0057BFEE /* CGImage+Help.swift in Sources */,
-				090BFED720E36ED700819FBF /* ImageSlideViewController.swift in Sources */,
+				090BFED720E36ED700819FBF /* FMImageSlideViewController.swift in Sources */,
+				09BA00E521096D270095186C /* Config.swift in Sources */,
 				090BFEF420E3A30E00819FBF /* UIImage.swift in Sources */,
 				09906A1D20E60C3400C06D69 /* Enums.swift in Sources */,
 				091922F120EA0E82009EC24B /* ImageLoader.swift in Sources */,
+				09BA00E721096D480095186C /* ConfigureZoomView.swift in Sources */,
 				091922F720EA340A009EC24B /* FMAlert.swift in Sources */,
 				0957AD5320EB148100616929 /* HorizontalStackView.swift in Sources */,
 				09919DBE20EE088500FF4874 /* FMDelegateProtocol.swift in Sources */,

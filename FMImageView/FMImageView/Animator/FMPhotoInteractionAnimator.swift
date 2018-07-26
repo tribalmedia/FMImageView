@@ -16,7 +16,7 @@ extension FMPhotoInteractionAnimator:  UIViewControllerTransitioningDelegate{
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard let photoPresenterViewController = dismissed as? ImageSlideViewController else { return nil }
+        guard let photoPresenterViewController = dismissed as? FMImageSlideViewController else { return nil }
         let animationController = FMZoomOutAnimationController(interactionController: photoPresenterViewController.swipeInteractionController)
         animationController.getDestFrame = self.getOriginFrameForTransition
         return animationController
@@ -45,7 +45,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
     fileprivate var originFrameForTransition: CGRect?
     
     private var shouldCompleteTransition = false
-    private weak var viewController: ImageSlideViewController!
+    private weak var viewController: FMImageSlideViewController!
     lazy private var panGestureRecognizer: UIPanGestureRecognizer = {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         
@@ -58,7 +58,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
     private var transitionContext: UIViewControllerContextTransitioning?
     public var animator: UIViewControllerAnimatedTransitioning?
     
-    init(viewController: ImageSlideViewController, fromImageView: UIImageView) {
+    init(viewController: FMImageSlideViewController, fromImageView: UIImageView) {
         super.init()
         
         self.viewController = viewController
@@ -94,7 +94,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
             
         } else {
             self.handlePanWithPanGestureRecognizer(gestureRecognizer,
-                                                   viewToPan: self.viewController.view,
+                                                   viewToPan: self.viewController.pageViewController!.view,
                                                    anchorPoint:  CGPoint(x: self.viewController.view.bounds.midX,
                                                                          y: self.viewController.view.bounds.midY))
         }
@@ -105,7 +105,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
             return
         }
         let translatedPanGesturePoint = gestureRecognizer.translation(in: fromView)
-        let newCenterPoint = CGPoint(x: anchorPoint.x + translatedPanGesturePoint.x, y: anchorPoint.y + translatedPanGesturePoint.y)
+        let newCenterPoint = CGPoint(x: anchorPoint.x, y: anchorPoint.y + translatedPanGesturePoint.y)
         
         viewToPan.center = newCenterPoint
         

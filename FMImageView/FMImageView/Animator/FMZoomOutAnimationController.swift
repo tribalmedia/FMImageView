@@ -20,20 +20,20 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
     }
     
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return Constants.AnimationDuration.defaultDuration
     }
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromVC = transitionContext.viewController(forKey: .from) as? ImageSlideViewController,
+        guard let fromVC = transitionContext.viewController(forKey: .from) as? FMImageSlideViewController,
             let toVC = transitionContext.viewController(forKey: .to),
-            let photoVC = fromVC.pageViewController!.viewControllers?.first as? ImagePreviewViewController
+            let photoVC = fromVC.pageViewController!.viewControllers?.first as? FMImagePreviewViewController
             else {
                 return
         }
         
         let containerView = transitionContext.containerView
         
-        let pannedVector = fromVC.view.frame.origin
+        let pannedVector = fromVC.pageViewController!.view.frame.origin
         
         let snapshot = photoVC.viewToSnapshot().snapshot()
         

@@ -13,6 +13,8 @@ class TableViewController: UITableViewController {
     
     private var presentedPhotoIndex: Int?
     
+    var vc: FMImageSlideViewController?
+    
     let arrayURL = [
         URL(string: "https://media.funmee.jp/medias/6a6bdd8326c225b806021f39e19ed97b1cff8cc5/large.jpg")!,
         URL(string: "https://media.funmee.jp/medias/abbdda21d9c5859871bb88b521f6b4d2ab41601a/large.jpg")!,
@@ -53,8 +55,11 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! ImageCell
-        cell.photoImageView.downloadedFrom(url: self.arrayURL[indexPath.row])
-
+        
+        ImageLoader.sharedLoader.imageForUrl(url: self.arrayURL[indexPath.row]) { (image, urlString, networkErr) in
+            cell.photoImageView.image = image
+        }
+        
         return cell
     }
     
@@ -68,8 +73,7 @@ class TableViewController: UITableViewController {
 
 extension TableViewController {
     private func presentPhotoViewer(fromImageView: UIImageView?, index: Int = 0) {
-        let vc = ImageSlideViewController(urls: arrayURL, fromImageView: fromImageView, startIndex: index)
-        
+        self.vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: arrayURL), config: Config(initImageView: fromImageView!, initIndex: index))
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "icn_like"), for: .normal)
         button.addTarget(self, action: #selector(target1(_:)), for: .touchUpInside)
@@ -82,13 +86,13 @@ extension TableViewController {
         let label1 = UILabel()
         label1.text = "20"
         
-        vc.subAreaBottomView.append((button: button, label: label))
-        vc.subAreaBottomView.append((button: button1, label: label1))
+        vc?.subAreaBottomView.append((button: button, label: label))
+        vc?.subAreaBottomView.append((button: button1, label: label1))
         
         
-        vc.view.frame = UIScreen.main.bounds
+        vc?.view.frame = UIScreen.main.bounds
         
-        self.present(vc, animated: true, completion: nil)
+        self.present(vc!, animated: true, completion: nil)
     }
     
     
@@ -99,28 +103,5 @@ extension TableViewController {
     
     @objc func target2(_ sender: UIButton) {
         print(#function)
-    }
-    
-    
-}
-
-extension UIImageView {
-    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFill) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() {
-                self.image = image
-            }
-            }.resume()
-    }
-    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloadedFrom(url: url, contentMode: mode)
     }
 }

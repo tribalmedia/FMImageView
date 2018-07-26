@@ -8,27 +8,27 @@
 
 import UIKit
 
-public class ImageSlideViewController: UIViewController {
-
+public class FMImageSlideViewController: UIViewController {
+    
     // ***********************************************
     // MARK: Custom variables
     // ***********************************************
     
-    var images: [UIImage] = []
+    // public
+    public var subAreaBottomView: [FMTuple] = []
     
-    var imageURLs: [URL] = []
-    
-    var startIndex = 0
-    
+    // internal
     var topView: UIView?
     
     var bottomView: HorizontalStackView?
     
-    public var subAreaBottomView: [FMTuple] = []
-    
     var pageViewController: UIPageViewController?
     
     var scrollView: ImageZoomView!
+    
+    var config: Config!
+    
+    var datasource: FMImageDataSource!
     
     weak var mDelegate: Move?
     
@@ -36,25 +36,27 @@ public class ImageSlideViewController: UIViewController {
     private var dismissButton: UIButton!
     private var numberImageLabel: UILabel!
     
-    private var fromImageView: UIImageView?
-    
     private var topConstrainTopView: NSLayoutConstraint?
     private var bottomConstraintStackView: NSLayoutConstraint?
     
     public var swipeInteractionController: FMPhotoInteractionAnimator?
     
-    public init(urls: [URL], fromImageView: UIImageView?, startIndex: Int = 0) {
-        self.imageURLs = urls
-        self.fromImageView = fromImageView
-        self.startIndex = startIndex
-        
+    // default init
+    public init(config: Config) {
+        self.config = config
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    // custom init
+    public convenience init(datasource: FMImageDataSource, config: Config) {
+        self.init(config: config)
+        self.datasource = datasource
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,6 +71,7 @@ public class ImageSlideViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // hide status bar
         if let window = UIApplication.shared.delegate?.window as? UIWindow {
             window.windowLevel = UIWindowLevelStatusBar + 1
         }
@@ -81,6 +84,7 @@ public class ImageSlideViewController: UIViewController {
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // show status bar
         if let window = UIApplication.shared.delegate?.window as? UIWindow {
             window.windowLevel = UIWindowLevelNormal
         }
@@ -103,6 +107,7 @@ public class ImageSlideViewController: UIViewController {
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        // setup top view when hide status bar
         if #available(iOS 11, *) {
             // safe area constraints already set
             additionalSafeAreaInsets = UIEdgeInsets(top: -UIApplication.shared.statusBarFrame.height, left: 0, bottom: 0, right: 0)
@@ -128,7 +133,7 @@ public class ImageSlideViewController: UIViewController {
     
     private func createFirstScreen() {
         // Create the first screen
-        if let startingViewController = self.getItemController(startIndex) {
+        if let config = self.config, let startingViewController = self.getItemController(config.initIndex) {
             self.pageViewController?.setViewControllers([startingViewController], direction: .forward, animated: true) { (completed) in
                 self.prepareNumbersImageLabel()
                 self.prepareDismissButton()
@@ -139,9 +144,9 @@ public class ImageSlideViewController: UIViewController {
     }
     
     private func configureSwipeInteractionController() {
-        guard let _ = self.fromImageView else { return }
+        guard let _ = self.config else { return }
         // init animation transition
-        self.swipeInteractionController = FMPhotoInteractionAnimator(viewController: self, fromImageView: self.fromImageView!)
+        self.swipeInteractionController = FMPhotoInteractionAnimator(viewController: self, fromImageView: self.config!.initImageView)
         
         self.transitioningDelegate = self.swipeInteractionController
         self.modalPresentationStyle = .custom
@@ -174,7 +179,8 @@ public class ImageSlideViewController: UIViewController {
     }
     
     private func setupTopSubView() {
-        self.updateUINumberImageLabel(numerator: self.startIndex)
+        self.updateUINumberImageLabel(numerator: self.config.initIndex)
+        
         topView = UIView()
         topView?.translatesAutoresizingMaskIntoConstraints = false
         
@@ -195,27 +201,27 @@ public class ImageSlideViewController: UIViewController {
         
         NSLayoutConstraint.activate(
             [NSLayoutConstraint(item: dismissButton, attribute: .left, relatedBy: .equal, toItem: topView, attribute: .left, multiplier: 1, constant: Constants.Layout.leadingDismissButton)] +
-            [NSLayoutConstraint(item: dismissButton,attribute: .top, relatedBy: .equal, toItem: topView,attribute: .top, multiplier: 1, constant: Constants.Layout.cHeightTV / 2)] +
-            [NSLayoutConstraint(item: numberImageLabel,attribute: .centerX, relatedBy: .equal, toItem: topView, attribute: .centerX, multiplier: 1, constant: 0)] +
-            [NSLayoutConstraint( item: numberImageLabel, attribute: .top, relatedBy: .equal, toItem: topView, attribute: .top, multiplier: 1, constant: Constants.Layout.cHeightTV / 2)]
+                [NSLayoutConstraint(item: dismissButton,attribute: .top, relatedBy: .equal, toItem: topView,attribute: .top, multiplier: 1, constant: Constants.Layout.cHeightTV / 2)] +
+                [NSLayoutConstraint(item: numberImageLabel,attribute: .centerX, relatedBy: .equal, toItem: topView, attribute: .centerX, multiplier: 1, constant: 0)] +
+                [NSLayoutConstraint( item: numberImageLabel, attribute: .top, relatedBy: .equal, toItem: topView, attribute: .top, multiplier: 1, constant: Constants.Layout.cHeightTV / 2)]
         )
         
     }
     
-    func  runDelegate(_ sender: UIPanGestureRecognizer) {
+    func runDelegate(_ sender: UIPanGestureRecognizer) {
         self.mDelegate?.moving(sender)
         
         switch sender.state {
         case .began:
             self.handlingElasticityOfTopViewAndBottomView(type: .elasticity_out)
         case .changed:
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
                 self.pageViewController?.view.backgroundColor = UIColor.black.withAlphaComponent(0)
             }, completion: { _ in
                 
             })
         case .ended, .cancelled, .failed:
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
                 self.pageViewController?.view.backgroundColor = UIColor.black.withAlphaComponent(1)
             })
             self.handlingElasticityOfTopViewAndBottomView(type: .elasticity_in)
@@ -227,7 +233,7 @@ public class ImageSlideViewController: UIViewController {
     
     private func setupBottomSubView() {
         self.bottomView = HorizontalStackView(items: self.subAreaBottomView)
-
+        
         self.view.addSubview(self.bottomView!)
         
         self.bottomView!.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
@@ -237,11 +243,12 @@ public class ImageSlideViewController: UIViewController {
     }
     
     private func updateUINumberImageLabel(numerator: Int?) {
-        if self.imageURLs.isEmpty {
+        guard let numerator = numerator else {
+            self.numberImageLabel.text = "1/\(self.datasource.total())"
             return
         }
         
-        numberImageLabel.text = numerator == nil ? "1/\(imageURLs.count)" : "\(numerator! + 1)/\(imageURLs.count)"
+        numberImageLabel.text = "\(numerator + 1)/\(self.datasource.total())"
     }
     
     // ***********************************************
@@ -250,17 +257,22 @@ public class ImageSlideViewController: UIViewController {
     
     fileprivate func getItemController(_ itemIndex: Int) -> UIViewController? {
         
-        if itemIndex < self.imageURLs.count {
+        if itemIndex < self.datasource.total() {
             
-            let result = ImagePreviewViewController()
+            let result = FMImagePreviewViewController()
             
             result.itemIndex = itemIndex
             
-            if let fromImage = self.fromImageView?.image, itemIndex == self.startIndex {
-                result.image = fromImage
+            if let fromImage = self.config?.initImageView, itemIndex == self.config?.initIndex {
+                result.image = fromImage.image
             } else {
-                result.imageURL = self.imageURLs[itemIndex]
+                if self.datasource.useURLs {
+                    result.imageURL = self.datasource.selectImageURL(index: itemIndex)
+                } else {
+                    result.image = self.datasource.selectImage(index: itemIndex)
+                }
             }
+            
             if result.scrollView == nil {
                 result.scrollView = self.scrollView
             }
@@ -274,15 +286,50 @@ public class ImageSlideViewController: UIViewController {
         
         return nil
     }
+    
+    private func fadeOut(with duration: TimeInterval = Constants.AnimationDuration.defaultDuration) {
+        guard let bottomView = self.bottomView, let topView = self.topView else {
+            return
+        }
+        
+        self.topConstrainTopView?.constant = -(self.topView!.frame.height / 2)
+        self.bottomConstraintStackView?.constant = bottomView.heightStackView / 2
+        
+        UIView.animate(withDuration: duration) {
+            topView.alpha = 0
+            bottomView.alpha = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func fadeIn(with duration: TimeInterval = Constants.AnimationDuration.defaultDuration) {
+        guard let bottomView = self.bottomView, let topView = self.topView else {
+            return
+        }
+        
+        self.topConstrainTopView?.constant = Constants.Layout.cTopTV
+        self.bottomConstraintStackView?.constant = Constants.Layout.cBottomBV
+        
+        UIView.animate(withDuration: duration) {
+            topView.alpha = 1
+            bottomView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+    }
 }
-extension ImageSlideViewController: UIPageViewControllerDataSource {
+
+// ***********************************************
+// MARK: UIPageViewControllerDataSource
+// ***********************************************
+
+extension FMImageSlideViewController: UIPageViewControllerDataSource {
     public func pageViewController(_ pageViewController: UIPageViewController,
                                    viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
-        let itemController = viewController as! ImagePreviewViewController
+        let itemController = viewController as! FMImagePreviewViewController
         
         if itemController.itemIndex > 0 {
-            return getItemController(itemController.itemIndex-1)
+            return getItemController(itemController.itemIndex - 1)
         }
         
         return nil
@@ -291,10 +338,10 @@ extension ImageSlideViewController: UIPageViewControllerDataSource {
     public func pageViewController(_ pageViewController: UIPageViewController,
                                    viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        let itemController = viewController as! ImagePreviewViewController
+        let itemController = viewController as! FMImagePreviewViewController
         
-        if itemController.itemIndex+1 < self.imageURLs.count {
-            return getItemController(itemController.itemIndex+1)
+        if itemController.itemIndex + 1 < self.datasource.total() {
+            return getItemController(itemController.itemIndex + 1)
         }
         
         return nil
@@ -302,22 +349,26 @@ extension ImageSlideViewController: UIPageViewControllerDataSource {
     }
 }
 
-extension ImageSlideViewController: UIPageViewControllerDelegate {
+// ***********************************************
+// MARK: UIPageViewControllerDelegate
+// ***********************************************
+
+extension FMImageSlideViewController: UIPageViewControllerDelegate {
     public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if let vc = pageViewController.viewControllers?.first as? ImagePreviewViewController {
+        if let vc = pageViewController.viewControllers?.first as? FMImagePreviewViewController {
             self.updateUINumberImageLabel(numerator: vc.itemIndex)
             vc.slideStatus = .completed
         }
     }
     
     public func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        if let vc = pageViewController.viewControllers?.first as? ImagePreviewViewController {
+        if let vc = pageViewController.viewControllers?.first as? FMImagePreviewViewController {
             vc.slideStatus = .pendding
         }
     }
 }
 
-extension ImageSlideViewController: ImageSlideFMDelegate {
+extension FMImageSlideViewController: ImageSlideFMDelegate {
     func handlingModal(type: TypeName.Modal) {
         if type == .md_dismiss {
             self.dismiss(animated: true, completion: nil)
@@ -337,27 +388,10 @@ extension ImageSlideViewController: ImageSlideFMDelegate {
     }
     
     func handlingElasticityOfTopViewAndBottomView(type: TypeName.Elasticity) {
-        guard let _ = self.bottomView, let _ = self.bottomConstraintStackView else { return }
-        
-        self.bottomConstraintStackView?.isActive = false
-        
-        if self.bottomConstraintStackView?.constant == Constants.Layout.cBottomBV && type == .elasticity_out {
-            self.bottomConstraintStackView?.constant = self.bottomView!.heightStackView
+        if type == .elasticity_out {
+            self.fadeOut()
         } else {
-            self.bottomConstraintStackView?.constant = Constants.Layout.cBottomBV
-        }
-        
-        self.topConstrainTopView?.isActive = false
-        if self.topConstrainTopView?.constant == Constants.Layout.cTopTV && type == .elasticity_out {
-            self.topConstrainTopView?.constant = -self.topView!.frame.height
-        } else {
-           self.topConstrainTopView?.constant = Constants.Layout.cTopTV
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.topConstrainTopView?.isActive = true
-            self.bottomConstraintStackView?.isActive = true
-            self.view.layoutIfNeeded()
+            self.fadeIn()
         }
     }
 }
