@@ -1,0 +1,23 @@
+*.xcbkptlist
+.DS_Store
+
+## Various settings
+*.pbxuser
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+FMImageView/build
+FMImageView/FMImageView/.DS_Store
+FMImageView/FMImageView.xcodeproj/xcuserdata/
+Example/Example.xcodeproj/project.xcworkspace/xcuserdata/
+Example/Example/.DS_Store
+Example/Example/Assets.xcassets/.DS_Store

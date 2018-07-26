@@ -1,0 +1,683 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		0969539720B51F5B0057BFEE /* Example */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 0969539820B51F5B0057BFEE /* Build configuration list for PBXAggregateTarget "Example" */;
+			buildPhases = (
+				0969539B20B51F730057BFEE /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Example;
+			productName = Example;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		090BFED320E36DBF00819FBF /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED220E36DBF00819FBF /* ImageZoomView.swift */; };
+		090BFED520E36E2C00819FBF /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED420E36E2C00819FBF /* ImagePreviewViewController.swift */; };
+		090BFED720E36ED700819FBF /* ImageSlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFED620E36ED700819FBF /* ImageSlideViewController.swift */; };
+		090BFEF420E3A30E00819FBF /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090BFEF320E3A30E00819FBF /* UIImage.swift */; };
+		091922F120EA0E82009EC24B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F020EA0E82009EC24B /* ImageLoader.swift */; };
+		091922F320EA1217009EC24B /* FMLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F220EA1217009EC24B /* FMLoadingView.swift */; };
+		091922F720EA340A009EC24B /* FMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F620EA340A009EC24B /* FMAlert.swift */; };
+		0957AD5020EB03A900616929 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0957AD4F20EB03A900616929 /* Assets.xcassets */; };
+		0957AD5320EB148100616929 /* HorizontalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957AD5220EB148100616929 /* HorizontalStackView.swift */; };
+		0957AD5520EB399C00616929 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957AD5420EB399C00616929 /* Constants.swift */; };
+		0969538520B51ECE0057BFEE /* FMImageView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0969537B20B51ECE0057BFEE /* FMImageView.framework */; };
+		0969538A20B51ECE0057BFEE /* FMImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0969538920B51ECE0057BFEE /* FMImageViewTests.swift */; };
+		0969538C20B51ECE0057BFEE /* FMImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0969537E20B51ECE0057BFEE /* FMImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		096953E720B52C290057BFEE /* Image+URL+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096953E620B52C290057BFEE /* Image+URL+Size.swift */; };
+		096953E920B5531C0057BFEE /* CGImage+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096953E820B5531C0057BFEE /* CGImage+Help.swift */; };
+		09906A1B20E60BFC00C06D69 /* UIPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */; };
+		09906A1D20E60C3400C06D69 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09906A1C20E60C3400C06D69 /* Enums.swift */; };
+		09919DBE20EE088500FF4874 /* FMDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */; };
+		09B0DCBC20E20F0100CB7DD3 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B0DCBB20E20F0100CB7DD3 /* CGSize.swift */; };
+		09B0DCBE20E20F1500CB7DD3 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */; };
+		09F663C720DCAB9000AB2B8A /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F663C620DCAB9000AB2B8A /* ImageView.swift */; };
+		09FD300D20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */; };
+		09FD301020F5DA6600DC132E /* FMZoomInAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */; };
+		09FD301220F5DA7A00DC132E /* FMZoomOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0969538620B51ECE0057BFEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0969537220B51ECE0057BFEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0969537A20B51ECE0057BFEE;
+			remoteInfo = FMImageView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		090BFED220E36DBF00819FBF /* ImageZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
+		090BFED420E36E2C00819FBF /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
+		090BFED620E36ED700819FBF /* ImageSlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlideViewController.swift; sourceTree = "<group>"; };
+		090BFEF320E3A30E00819FBF /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		091922F020EA0E82009EC24B /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		091922F220EA1217009EC24B /* FMLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMLoadingView.swift; sourceTree = "<group>"; };
+		091922F620EA340A009EC24B /* FMAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMAlert.swift; sourceTree = "<group>"; };
+		0957AD4F20EB03A900616929 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0957AD5220EB148100616929 /* HorizontalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalStackView.swift; sourceTree = "<group>"; };
+		0957AD5420EB399C00616929 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0969537B20B51ECE0057BFEE /* FMImageView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FMImageView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0969537E20B51ECE0057BFEE /* FMImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMImageView.h; sourceTree = "<group>"; };
+		0969537F20B51ECE0057BFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0969538420B51ECE0057BFEE /* FMImageViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FMImageViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0969538920B51ECE0057BFEE /* FMImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMImageViewTests.swift; sourceTree = "<group>"; };
+		0969538B20B51ECE0057BFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		096953E620B52C290057BFEE /* Image+URL+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+URL+Size.swift"; sourceTree = "<group>"; };
+		096953E820B5531C0057BFEE /* CGImage+Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Help.swift"; sourceTree = "<group>"; };
+		09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPanGestureRecognizer.swift; sourceTree = "<group>"; };
+		09906A1C20E60C3400C06D69 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDelegateProtocol.swift; sourceTree = "<group>"; };
+		09B0DCBB20E20F0100CB7DD3 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
+		09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		09F663C620DCAB9000AB2B8A /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMPhotoInteractionAnimator.swift; sourceTree = "<group>"; };
+		09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMZoomInAnimationController.swift; sourceTree = "<group>"; };
+		09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMZoomOutAnimationController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0969537720B51ECE0057BFEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0969538120B51ECE0057BFEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0969538520B51ECE0057BFEE /* FMImageView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		090BFED120E36D7D00819FBF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0957AD5120EB144400616929 /* Subviews */,
+				090BFED220E36DBF00819FBF /* ImageZoomView.swift */,
+				090BFED420E36E2C00819FBF /* ImagePreviewViewController.swift */,
+				090BFED620E36ED700819FBF /* ImageSlideViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		091922F520EA33EB009EC24B /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				091922F620EA340A009EC24B /* FMAlert.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		0957AD5120EB144400616929 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				0957AD5220EB148100616929 /* HorizontalStackView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		0969537120B51ECE0057BFEE = {
+			isa = PBXGroup;
+			children = (
+				0969537D20B51ECE0057BFEE /* FMImageView */,
+				0969538820B51ECE0057BFEE /* FMImageViewTests */,
+				0969537C20B51ECE0057BFEE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0969537C20B51ECE0057BFEE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0969537B20B51ECE0057BFEE /* FMImageView.framework */,
+				0969538420B51ECE0057BFEE /* FMImageViewTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0969537D20B51ECE0057BFEE /* FMImageView */ = {
+			isa = PBXGroup;
+			children = (
+				09919DBC20EE084100FF4874 /* Protocols */,
+				AB7E5E9520ECB15800FF09EB /* Animator */,
+				090BFED120E36D7D00819FBF /* Views */,
+				09F663C520DCAB7400AB2B8A /* Extensions */,
+				096953E520B52BE00057BFEE /* Help */,
+				096953E420B5287D0057BFEE /* Indicator */,
+				091922F520EA33EB009EC24B /* Alert */,
+				096953E320B528760057BFEE /* Network */,
+				0969537E20B51ECE0057BFEE /* FMImageView.h */,
+				0969537F20B51ECE0057BFEE /* Info.plist */,
+				0957AD4F20EB03A900616929 /* Assets.xcassets */,
+			);
+			path = FMImageView;
+			sourceTree = "<group>";
+		};
+		0969538820B51ECE0057BFEE /* FMImageViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				0969538920B51ECE0057BFEE /* FMImageViewTests.swift */,
+				0969538B20B51ECE0057BFEE /* Info.plist */,
+			);
+			path = FMImageViewTests;
+			sourceTree = "<group>";
+		};
+		096953E320B528760057BFEE /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				091922F020EA0E82009EC24B /* ImageLoader.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		096953E420B5287D0057BFEE /* Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				091922F220EA1217009EC24B /* FMLoadingView.swift */,
+			);
+			path = Indicator;
+			sourceTree = "<group>";
+		};
+		096953E520B52BE00057BFEE /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				096953E620B52C290057BFEE /* Image+URL+Size.swift */,
+				096953E820B5531C0057BFEE /* CGImage+Help.swift */,
+				09906A1C20E60C3400C06D69 /* Enums.swift */,
+				0957AD5420EB399C00616929 /* Constants.swift */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
+		09919DBC20EE084100FF4874 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		09F663C520DCAB7400AB2B8A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				09F663C620DCAB9000AB2B8A /* ImageView.swift */,
+				09B0DCBB20E20F0100CB7DD3 /* CGSize.swift */,
+				09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */,
+				090BFEF320E3A30E00819FBF /* UIImage.swift */,
+				09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AB7E5E9520ECB15800FF09EB /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */,
+				09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */,
+				09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */,
+			);
+			path = Animator;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0969537820B51ECE0057BFEE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0969538C20B51ECE0057BFEE /* FMImageView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0969537A20B51ECE0057BFEE /* FMImageView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0969538F20B51ECE0057BFEE /* Build configuration list for PBXNativeTarget "FMImageView" */;
+			buildPhases = (
+				0969537620B51ECE0057BFEE /* Sources */,
+				0969537720B51ECE0057BFEE /* Frameworks */,
+				0969537820B51ECE0057BFEE /* Headers */,
+				0969537920B51ECE0057BFEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FMImageView;
+			productName = FMImageView;
+			productReference = 0969537B20B51ECE0057BFEE /* FMImageView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		0969538320B51ECE0057BFEE /* FMImageViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0969539220B51ECE0057BFEE /* Build configuration list for PBXNativeTarget "FMImageViewTests" */;
+			buildPhases = (
+				0969538020B51ECE0057BFEE /* Sources */,
+				0969538120B51ECE0057BFEE /* Frameworks */,
+				0969538220B51ECE0057BFEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0969538720B51ECE0057BFEE /* PBXTargetDependency */,
+			);
+			name = FMImageViewTests;
+			productName = FMImageViewTests;
+			productReference = 0969538420B51ECE0057BFEE /* FMImageViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0969537220B51ECE0057BFEE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Hoang Trong Anh";
+				TargetAttributes = {
+					0969537A20B51ECE0057BFEE = {
+						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 0930;
+					};
+					0969538320B51ECE0057BFEE = {
+						CreatedOnToolsVersion = 9.3.1;
+					};
+					0969539720B51F5B0057BFEE = {
+						CreatedOnToolsVersion = 9.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 0969537520B51ECE0057BFEE /* Build configuration list for PBXProject "FMImageView" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0969537120B51ECE0057BFEE;
+			productRefGroup = 0969537C20B51ECE0057BFEE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0969537A20B51ECE0057BFEE /* FMImageView */,
+				0969538320B51ECE0057BFEE /* FMImageViewTests */,
+				0969539720B51F5B0057BFEE /* Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0969537920B51ECE0057BFEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0957AD5020EB03A900616929 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0969538220B51ECE0057BFEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0969539B20B51F730057BFEE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-example\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target \"FMImageView\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"AlamoWater\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/FMImageView.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/FMImageView.framework/Modules/FMImageView.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/FMImageView.framework/Modules/FMImageView.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/FMImageView.framework/FMImageView\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/FMImageView.framework/FMImageView\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/FMImageView.framework/FMImageView\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/FMImageView.framework\" \"${PROJECT_DIR}\"\n\n# Step 6. Convenience step to open the project's directory in Finder\nopen \"${PROJECT_DIR}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0969537620B51ECE0057BFEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09F663C720DCAB9000AB2B8A /* ImageView.swift in Sources */,
+				09FD300D20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift in Sources */,
+				0957AD5520EB399C00616929 /* Constants.swift in Sources */,
+				091922F320EA1217009EC24B /* FMLoadingView.swift in Sources */,
+				096953E720B52C290057BFEE /* Image+URL+Size.swift in Sources */,
+				09906A1B20E60BFC00C06D69 /* UIPanGestureRecognizer.swift in Sources */,
+				09B0DCBC20E20F0100CB7DD3 /* CGSize.swift in Sources */,
+				090BFED520E36E2C00819FBF /* ImagePreviewViewController.swift in Sources */,
+				09FD301020F5DA6600DC132E /* FMZoomInAnimationController.swift in Sources */,
+				09B0DCBE20E20F1500CB7DD3 /* CGPoint.swift in Sources */,
+				090BFED320E36DBF00819FBF /* ImageZoomView.swift in Sources */,
+				09FD301220F5DA7A00DC132E /* FMZoomOutAnimationController.swift in Sources */,
+				096953E920B5531C0057BFEE /* CGImage+Help.swift in Sources */,
+				090BFED720E36ED700819FBF /* ImageSlideViewController.swift in Sources */,
+				090BFEF420E3A30E00819FBF /* UIImage.swift in Sources */,
+				09906A1D20E60C3400C06D69 /* Enums.swift in Sources */,
+				091922F120EA0E82009EC24B /* ImageLoader.swift in Sources */,
+				091922F720EA340A009EC24B /* FMAlert.swift in Sources */,
+				0957AD5320EB148100616929 /* HorizontalStackView.swift in Sources */,
+				09919DBE20EE088500FF4874 /* FMDelegateProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0969538020B51ECE0057BFEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0969538A20B51ECE0057BFEE /* FMImageViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0969538720B51ECE0057BFEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0969537A20B51ECE0057BFEE /* FMImageView */;
+			targetProxy = 0969538620B51ECE0057BFEE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0969538D20B51ECE0057BFEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		0969538E20B51ECE0057BFEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		0969539020B51ECE0057BFEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 254Q23AKWK;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = FMImageView/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = anhht.FMImageView;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0969539120B51ECE0057BFEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 254Q23AKWK;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = FMImageView/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = anhht.FMImageView;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0969539320B51ECE0057BFEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 254Q23AKWK;
+				INFOPLIST_FILE = FMImageViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = anhht.FMImageViewTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0969539420B51ECE0057BFEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 254Q23AKWK;
+				INFOPLIST_FILE = FMImageViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = anhht.FMImageViewTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0969539920B51F5B0057BFEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 254Q23AKWK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0969539A20B51F5B0057BFEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 254Q23AKWK;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0969537520B51ECE0057BFEE /* Build configuration list for PBXProject "FMImageView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0969538D20B51ECE0057BFEE /* Debug */,
+				0969538E20B51ECE0057BFEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0969538F20B51ECE0057BFEE /* Build configuration list for PBXNativeTarget "FMImageView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0969539020B51ECE0057BFEE /* Debug */,
+				0969539120B51ECE0057BFEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0969539220B51ECE0057BFEE /* Build configuration list for PBXNativeTarget "FMImageViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0969539320B51ECE0057BFEE /* Debug */,
+				0969539420B51ECE0057BFEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0969539820B51F5B0057BFEE /* Build configuration list for PBXAggregateTarget "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0969539920B51F5B0057BFEE /* Debug */,
+				0969539A20B51F5B0057BFEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0969537220B51ECE0057BFEE /* Project object */;
+}

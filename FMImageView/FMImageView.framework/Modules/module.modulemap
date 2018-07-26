@@ -1,0 +1,11 @@
+framework module FMImageView {
+  umbrella header "FMImageView.h"
+
+  export *
+  module * { export * }
+}
+
+module FMImageView.Swift {
+    header "FMImageView-Swift.h"
+    requires objc
+}
