@@ -80,12 +80,15 @@ class FMImagePreviewViewController: UIViewController {
         }
         
         DispatchQueue.main.async {
-            FMLoadingView.shared.show()
+            self.parentVC?.swipeInteractionController?.disable()
+            
+            FMLoadingView.shared.show(inView: self.parentVC?.view)
         }
+        
         ImageLoader.sharedLoader.imageForUrl(url: imageURL) { (image, urlString, error) in
             if let _ = error {
                 DispatchQueue.main.async {
-                    FMAlert.shared.show(message: "Whoops! Something went wrong.\nPlease try again!")
+                    FMAlert.shared.show(inView: self.parentVC?.view, message: "Whoops! Something went wrong.\nPlease try again!")
                 }
                 
             }
@@ -95,6 +98,8 @@ class FMImagePreviewViewController: UIViewController {
             }
             
             DispatchQueue.main.async {
+                self.parentVC?.swipeInteractionController?.enable()
+                
                 FMLoadingView.shared.hide()
             }
         }
