@@ -37,11 +37,20 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
         
         let snapshot = photoVC.viewToSnapshot().snapshot()
         
+        let bgView = UIView(frame: containerView.frame)
+        bgView.backgroundColor = .black
+        bgView.alpha = 1
+//        print("fromVC: \(fromVC)")
+//        print("photoVC: \(photoVC.view.backgroundColor)")
+        
+        containerView.addSubview(bgView)
         containerView.addSubview(snapshot)
         
         let originSnapshotSize = snapshot.frame.size
         
         snapshot.frame = CGRect(origin: .zero, size: originSnapshotSize)
+        snapshot.clipsToBounds = true
+        snapshot.contentMode = .scaleAspectFill
         snapshot.center = containerView.center
         
         snapshot.frame = CGRect(origin: CGPoint(x: snapshot.frame.origin.x + pannedVector.x,
@@ -58,8 +67,11 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
             options: .calculationModeCubic,
             animations: {
                 UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.9) {
-                    snapshot.frame = self.realDestinationFrame(scaledFrame: self.getDestFrame(), realSize: snapshot.frame.size)
+                    // snapshot.frame = self.realDestinationFrame(scaledFrame: self.getDestFrame(), realSize: snapshot.frame.size)
+                    snapshot.frame = self.getDestFrame()
                     snapshot.layer.cornerRadius = 0
+                    bgView.alpha = 0
+//                    bgView.backgroundColor = bgView.backgroundColor?.withAlphaComponent(0)
                 }
                 
                 UIView.addKeyframe(withRelativeStartTime: 0.9, relativeDuration: 0.1) {
@@ -69,6 +81,7 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
             completion: { _ in
                 fromVC.view.isHidden = false
                 snapshot.removeFromSuperview()
+                bgView.removeFromSuperview()
                 if transitionContext.transitionWasCancelled {
                     toVC.view.removeFromSuperview()
                 }
