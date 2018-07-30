@@ -8,31 +8,6 @@
 
 import UIKit
 
-extension UIView {
-    func snapshot() -> UIView {
-        if let contents = layer.contents {
-            var snapshotedView: UIView!
-            
-            if let view = self as? UIImageView {
-                snapshotedView = type(of: view).init(image: view.image)
-                snapshotedView.bounds = view.bounds
-            } else {
-                snapshotedView = UIView(frame: frame)
-                snapshotedView.layer.contents = contents
-                snapshotedView.layer.bounds = layer.bounds
-            }
-            snapshotedView.layer.cornerRadius = layer.cornerRadius
-            snapshotedView.layer.masksToBounds = layer.masksToBounds
-            snapshotedView.contentMode = contentMode
-            snapshotedView.transform = transform
-            
-            return snapshotedView
-        } else {
-            return snapshotView(afterScreenUpdates: true)!
-        }
-    }
-}
-
 public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     public var getOriginFrame: (() -> CGRect)!
     
@@ -51,15 +26,17 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
         
         let bgView = UIView(frame: containerView.frame)
         containerView.addSubview(bgView)
-        containerView.addSubview(snapshot)
         
         let originalSnapshotCornerRadius = snapshot.layer.cornerRadius
         let originalSnapshotSize = snapshot.frame.size
         
-        let startFrame = self.realDestinationFrame(scaledFrame: self.getOriginFrame(), realSize: snapshot.frame.size)
+        // let startFrame = self.realDestinationFrame(scaledFrame: self.getOriginFrame(), realSize: snapshot.frame.size)
+        let startFrame = self.getOriginFrame()
         
         snapshot.layer.cornerRadius = 0
         snapshot.frame = startFrame
+        snapshot.contentMode = .scaleAspectFill
+        snapshot.clipsToBounds = true
         
         containerView.addSubview(toVC.view)
         containerView.addSubview(snapshot)
@@ -67,7 +44,7 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
         toVC.view.isHidden = true
         
         snapshot.alpha = 0
-        bgView.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        bgView.backgroundColor = UIColor.black
         bgView.alpha = 0
         
         let duration = transitionDuration(using: transitionContext)
@@ -86,7 +63,7 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
                                         snapshot.layer.cornerRadius = originalSnapshotCornerRadius
                                     }
                                     
-                                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+                                    UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.9) {
                                         bgView.alpha = 1
                                     }
         },
