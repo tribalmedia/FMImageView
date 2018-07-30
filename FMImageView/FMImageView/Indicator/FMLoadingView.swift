@@ -24,12 +24,14 @@ class FMLoadingView {
         self.indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
         self.indicator.center = self.transparentView.center
         self.indicator.color = .white
+        self.indicator.hidesWhenStopped = true
         
         self.transparentView.addSubview(self.indicator)
     }
     
-    func show() {
-        UIApplication.shared.keyWindow?.addSubview(self.transparentView)
+    func show(inView: UIView?) {
+        inView?.addSubview(self.transparentView)
+        
         self.transparentView.alpha = 0
         self.indicator.startAnimating()
         UIView.animate(withDuration: 0.3, animations: {
