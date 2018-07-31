@@ -69,6 +69,8 @@ public class FMImageSlideViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .black
+        
         // step 1
         self.configurePageViewController()
         // step 2
@@ -130,7 +132,7 @@ public class FMImageSlideViewController: UIViewController {
         self.pageViewController!.dataSource = self
         self.pageViewController!.delegate = self
         
-        self.pageViewController?.view.backgroundColor = .black
+        self.pageViewController?.view.backgroundColor = .clear
         
         self.addChildViewController(self.pageViewController!)
         self.view.addSubview(pageViewController!.view)
@@ -218,21 +220,10 @@ public class FMImageSlideViewController: UIViewController {
     }
     
     func runDelegate(_ sender: UIPanGestureRecognizer) {
-        self.mDelegate?.moving(sender)
-        
         switch sender.state {
         case .began:
             self.handlingElasticityOfTopViewAndBottomView(type: .elasticity_out)
-        case .changed:
-            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
-                self.pageViewController?.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-            }, completion: { _ in
-                
-            })
         case .ended, .cancelled, .failed:
-            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
-                self.pageViewController?.view.backgroundColor = UIColor.black.withAlphaComponent(1)
-            })
             self.handlingElasticityOfTopViewAndBottomView(type: .elasticity_in)
         default:
             break
