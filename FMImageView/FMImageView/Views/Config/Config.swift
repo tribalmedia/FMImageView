@@ -12,6 +12,8 @@ public struct Config {
     public var initImageView: UIImageView
     public var initIndex: Int
     
+    public var isBackgroundColorByExtraColorImage: Bool = false
+    
     public init(initImageView: UIImageView, initIndex: Int) {
         self.initImageView = initImageView
         self.initIndex = initIndex

@@ -73,7 +73,11 @@ class TableViewController: UITableViewController {
 
 extension TableViewController {
     private func presentPhotoViewer(fromImageView: UIImageView?, index: Int = 0) {
-        self.vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: arrayURL), config: Config(initImageView: fromImageView!, initIndex: index))
+        var config = Config(initImageView: fromImageView!, initIndex: index)
+        
+        config.isBackgroundColorByExtraColorImage = true
+        
+        self.vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: arrayURL), config: config)
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "icn_like"), for: .normal)
         button.addTarget(self, action: #selector(target1(_:)), for: .touchUpInside)

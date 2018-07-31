@@ -30,6 +30,15 @@ public class FMImageSlideViewController: UIViewController {
     
     var datasource: FMImageDataSource!
     
+    var tupleColorBacground: [(pageIndex: Int, hexColor: String)] = []
+    
+    // private
+    private var currentPage: Int = 0 {
+        didSet {
+            _ = self.setBgColorHexInTupleColorBackground()
+        }
+    }
+
     weak var mDelegate: Move?
     
     // outlets
@@ -255,6 +264,50 @@ public class FMImageSlideViewController: UIViewController {
     // MARK: UIPageViewController
     // ***********************************************
     
+    private func setBgColorHexInTupleColorBackground() -> Bool {
+        if self.tupleColorBacground.contains(where: { ($0.pageIndex == self.currentPage) }) {
+            for value in self.tupleColorBacground {
+                if value.pageIndex == self.currentPage {
+                    
+                    self.setBackgroundColorViewController(byHex: value.hexColor)
+
+                    return true
+                }
+            }
+            
+            return false
+        }
+        
+        return false
+    }
+    
+    private func setTupleColorBackgroundAndChangeBackgroundView(pageIndex: Int, hexColor: String?) {
+        guard let extraColor = hexColor else { return }
+        
+        if self.tupleColorBacground.count < self.datasource.total() {
+            self.tupleColorBacground.append((pageIndex: pageIndex, hexColor: extraColor))
+        }
+        
+        if !self.setBgColorHexInTupleColorBackground() {
+            self.setBackgroundColorViewController(byHex: extraColor)
+        }
+        
+    }
+    
+    private func setBackgroundColorViewController(byHex hex: String) {
+        if self.config.isBackgroundColorByExtraColorImage {
+            if let bg = self.view.backgroundColor {
+                if bg.toHexString() == hex { return }
+            }
+            
+            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
+                self.view.backgroundColor = UIColor(hexString: hex, alpha: 1.0)
+            }, completion: { (success) in
+                
+            })
+        }
+    }
+    
     fileprivate func getItemController(_ itemIndex: Int) -> UIViewController? {
         
         if itemIndex < self.datasource.total() {
@@ -268,6 +321,14 @@ public class FMImageSlideViewController: UIViewController {
             } else {
                 if self.datasource.useURLs {
                     result.imageURL = self.datasource.selectImageURL(index: itemIndex)
+                    
+                    result.image?.fm_setImage(url: result.imageURL, completed: { (image, error, extraColor) in
+                        if let image = image {
+                            result.update(image: image)
+                            
+                            self.setTupleColorBackgroundAndChangeBackgroundView(pageIndex: itemIndex, hexColor: extraColor)
+                        }
+                    })
                 } else {
                     result.image = self.datasource.selectImage(index: itemIndex)
                 }
@@ -358,6 +419,8 @@ extension FMImageSlideViewController: UIPageViewControllerDelegate {
         if let vc = pageViewController.viewControllers?.first as? FMImagePreviewViewController {
             self.updateUINumberImageLabel(numerator: vc.itemIndex)
             vc.slideStatus = .completed
+            
+            self.currentPage = vc.itemIndex
         }
     }
     

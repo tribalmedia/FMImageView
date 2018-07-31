@@ -28,6 +28,7 @@
 		091922F120EA0E82009EC24B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F020EA0E82009EC24B /* ImageLoader.swift */; };
 		091922F320EA1217009EC24B /* FMLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F220EA1217009EC24B /* FMLoadingView.swift */; };
 		091922F720EA340A009EC24B /* FMAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091922F620EA340A009EC24B /* FMAlert.swift */; };
+		092B070E210F25DC00DB926A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092B070D210F25DC00DB926A /* UIColor.swift */; };
 		0957AD5020EB03A900616929 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0957AD4F20EB03A900616929 /* Assets.xcassets */; };
 		0957AD5320EB148100616929 /* HorizontalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957AD5220EB148100616929 /* HorizontalStackView.swift */; };
 		0957AD5520EB399C00616929 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957AD5420EB399C00616929 /* Constants.swift */; };
@@ -68,6 +69,7 @@
 		091922F020EA0E82009EC24B /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		091922F220EA1217009EC24B /* FMLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMLoadingView.swift; sourceTree = "<group>"; };
 		091922F620EA340A009EC24B /* FMAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMAlert.swift; sourceTree = "<group>"; };
+		092B070D210F25DC00DB926A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		0957AD4F20EB03A900616929 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0957AD5220EB148100616929 /* HorizontalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalStackView.swift; sourceTree = "<group>"; };
 		0957AD5420EB399C00616929 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				090BFEF320E3A30E00819FBF /* UIImage.swift */,
 				09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */,
 				AB813DC0210EE59000031206 /* UIView.swift */,
+				092B070D210F25DC00DB926A /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				09B0DCBE20E20F1500CB7DD3 /* CGPoint.swift in Sources */,
 				090BFED320E36DBF00819FBF /* ImageZoomView.swift in Sources */,
 				09FD301220F5DA7A00DC132E /* FMZoomOutAnimationController.swift in Sources */,
+				092B070E210F25DC00DB926A /* UIColor.swift in Sources */,
 				096953E920B5531C0057BFEE /* CGImage+Help.swift in Sources */,
 				090BFED720E36ED700819FBF /* FMImageSlideViewController.swift in Sources */,
 				09BA00E521096D270095186C /* Config.swift in Sources */,

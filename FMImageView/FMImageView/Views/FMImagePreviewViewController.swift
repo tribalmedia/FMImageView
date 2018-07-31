@@ -21,7 +21,7 @@ extension FMImagePreviewViewController: Move {
 class FMImagePreviewViewController: UIViewController {
     var itemIndex: Int = -1
     
-    var image: UIImage?
+    var image: UIImage? = UIImage(withBackground: UIColor.clear)
     
     var imageURL: URL?
     
@@ -55,11 +55,27 @@ class FMImagePreviewViewController: UIViewController {
             DispatchQueue.main.async {
                 self.scrollView.displayImage(fromImage)
             }
+            
+            if let extraColor = fromImage.extractColor() {
+                guard let _ = self.parentVC?.view.backgroundColor else {
+                    if self.parentVC!.tupleColorBacground.count < self.parentVC!.datasource.total() {
+                        self.parentVC?.tupleColorBacground.append((pageIndex: self.itemIndex, hexColor: extraColor))
+                    }
+
+                    self.parentVC?.view.backgroundColor = UIColor(hexString: extraColor, alpha: 1.0)
+                    
+                    return
+                }
+            }
         } else {
-            let image = UIImage(withBackground: UIColor.black)
-            scrollView.displayImage(image)
-            self.updateImage()
+            self.scrollView.displayImage(self.image!)
         }
+    }
+    
+    func update(image: UIImage?) {
+        guard let image = image else {return}
+        
+        self.scrollView.displayImage(image)
     }
     
     public func viewToSnapshot() -> UIView {
@@ -95,6 +111,13 @@ class FMImagePreviewViewController: UIViewController {
             
             if let image = image {
                 self.scrollView.displayImage(image)
+                
+                if let extraColor = image.extractColor() {
+                    guard let _ = self.parentVC?.view.backgroundColor else {
+                        self.parentVC?.view.backgroundColor = UIColor(hexString: extraColor, alpha: 1.0)
+                        return
+                    }
+                }
             }
             
             DispatchQueue.main.async {
