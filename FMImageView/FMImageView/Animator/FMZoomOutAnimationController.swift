@@ -38,8 +38,7 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
         let snapshot = photoVC.viewToSnapshot().snapshot()
         
         let bgView = UIView(frame: containerView.frame)
-        bgView.backgroundColor = .black
-        bgView.alpha = 1
+        bgView.backgroundColor = fromVC.view.backgroundColor
         
         containerView.addSubview(bgView)
         containerView.addSubview(snapshot)
