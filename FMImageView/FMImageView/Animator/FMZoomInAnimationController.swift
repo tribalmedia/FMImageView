@@ -30,7 +30,6 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
         let originalSnapshotCornerRadius = snapshot.layer.cornerRadius
         let originalSnapshotSize = snapshot.frame.size
         
-        // let startFrame = self.realDestinationFrame(scaledFrame: self.getOriginFrame(), realSize: snapshot.frame.size)
         let startFrame = self.getOriginFrame()
         
         snapshot.layer.cornerRadius = 0
@@ -44,7 +43,7 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
         toVC.view.isHidden = true
         
         snapshot.alpha = 0
-        bgView.backgroundColor = UIColor.black
+        bgView.backgroundColor = toVC.view.backgroundColor
         bgView.alpha = 0
         
         let duration = transitionDuration(using: transitionContext)
@@ -81,31 +80,6 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
                                     }
                                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
-    }
-    
-    private func realDestinationFrame(scaledFrame: CGRect, realSize: CGSize) -> CGRect {
-        let scaledSize = scaledFrame.size
-        let ratio = realSize.width / realSize.height
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
-        var width: CGFloat = scaledSize.width
-        var height: CGFloat = scaledSize.height
-        
-        if ratio >= 1 {
-            let scaleRatio = scaledSize.height / realSize.height
-            width = realSize.width * scaleRatio
-            x = -(width - scaledSize.width) / 2
-        } else {
-            let scaleRatio = scaledSize.width / realSize.width
-            height = realSize.height * scaleRatio
-            y = -(height - scaledSize.height) / 2
-        }
-        
-        let frame = CGRect(x: scaledFrame.origin.x + x,
-                           y: scaledFrame.origin.y + y,
-                           width: width,
-                           height: height)
-        return frame
     }
 }
 
