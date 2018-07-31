@@ -20,25 +20,26 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="109" id="pkQ-CB-K9I" customClass="ImageCell" customModule="Example" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="109"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="208" id="pkQ-CB-K9I" customClass="ImageCell" customModule="Example" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="208"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pkQ-CB-K9I" id="aIF-ON-7xJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="208"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gdw-00-HIk">
-                                            <rect key="frame" x="70" y="29" width="50" height="50"/>
+                                            <rect key="frame" x="48" y="31" width="88" height="88"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="VkA-bQ-R4p"/>
-                                                <constraint firstAttribute="width" constant="50" id="tCf-RW-nNb"/>
+                                                <constraint firstAttribute="width" constant="88" id="3rx-0v-Lhh"/>
+                                                <constraint firstAttribute="height" constant="88" id="PrK-cn-ASg"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="gdw-00-HIk" firstAttribute="top" secondItem="aIF-ON-7xJ" secondAttribute="topMargin" constant="18" id="2Zu-XJ-1wE"/>
-                                        <constraint firstItem="gdw-00-HIk" firstAttribute="leading" secondItem="aIF-ON-7xJ" secondAttribute="leadingMargin" constant="54" id="3M5-kk-Z0j"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="gdw-00-HIk" secondAttribute="bottom" constant="19" id="RSS-9B-tV9"/>
+                                        <constraint firstItem="gdw-00-HIk" firstAttribute="leading" secondItem="aIF-ON-7xJ" secondAttribute="leadingMargin" constant="32" id="8od-Df-utR"/>
+                                        <constraint firstItem="gdw-00-HIk" firstAttribute="top" secondItem="aIF-ON-7xJ" secondAttribute="topMargin" constant="20" id="bjE-WM-eRB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="gdw-00-HIk" secondAttribute="trailing" constant="223" id="f0L-Nn-Oqm"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="gdw-00-HIk" secondAttribute="bottom" constant="78" id="vAc-EV-b5q"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

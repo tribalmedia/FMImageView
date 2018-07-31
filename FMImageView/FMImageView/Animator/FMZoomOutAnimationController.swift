@@ -38,10 +38,7 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
         let snapshot = photoVC.viewToSnapshot().snapshot()
         
         let bgView = UIView(frame: containerView.frame)
-        bgView.backgroundColor = .black
-        bgView.alpha = 1
-//        print("fromVC: \(fromVC)")
-//        print("photoVC: \(photoVC.view.backgroundColor)")
+        bgView.backgroundColor = fromVC.view.backgroundColor
         
         containerView.addSubview(bgView)
         containerView.addSubview(snapshot)
@@ -60,65 +57,28 @@ public class FMZoomOutAnimationController: NSObject, UIViewControllerAnimatedTra
         fromVC.view.isHidden = true
         
         let duration = transitionDuration(using: transitionContext)
-        
-        UIView.animateKeyframes(
-            withDuration: duration,
-            delay: 0,
-            options: .calculationModeCubic,
-            animations: {
-                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.9) {
-                    // snapshot.frame = self.realDestinationFrame(scaledFrame: self.getDestFrame(), realSize: snapshot.frame.size)
-                    snapshot.frame = self.getDestFrame()
-                    snapshot.layer.cornerRadius = 0
-                    bgView.alpha = 0
-//                    bgView.backgroundColor = bgView.backgroundColor?.withAlphaComponent(0)
-                }
-                
-                UIView.addKeyframe(withRelativeStartTime: 0.9, relativeDuration: 0.1) {
-                    snapshot.alpha = 0.0
-                }
-        },
-            completion: { _ in
-                fromVC.view.isHidden = false
-                snapshot.removeFromSuperview()
-                bgView.removeFromSuperview()
+        UIView.animate(withDuration: duration, animations: {
+            let destFrame: CGRect = self.getDestFrame()
+            snapshot.frame = destFrame
+            snapshot.layer.cornerRadius = 0
+            bgView.alpha = 0
+        }) { _ in
+            fromVC.view.isHidden = false
+            snapshot.removeFromSuperview()
+            bgView.removeFromSuperview()
+            
+            if transitionContext.transitionWasCancelled {
+                toVC.view.removeFromSuperview()
+            }
+            
+            if transitionContext.isInteractive {
                 if transitionContext.transitionWasCancelled {
-                    toVC.view.removeFromSuperview()
+                    transitionContext.cancelInteractiveTransition()
+                } else {
+                    transitionContext.finishInteractiveTransition()
                 }
-                
-                if transitionContext.isInteractive {
-                    if transitionContext.transitionWasCancelled {
-                        transitionContext.cancelInteractiveTransition()
-                    } else {
-                        transitionContext.finishInteractiveTransition()
-                    }
-                }
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
-    }
-    
-    private func realDestinationFrame(scaledFrame: CGRect, realSize: CGSize) -> CGRect {
-        let scaledSize = scaledFrame.size
-        let ratio = realSize.width / realSize.height
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
-        var width: CGFloat = scaledSize.width
-        var height: CGFloat = scaledSize.height
-        
-        if ratio >= 1 {
-            let scaleRatio = scaledSize.height / realSize.height
-            width = realSize.width * scaleRatio
-            x = -(width - scaledSize.width) / 2
-        } else {
-            let scaleRatio = scaledSize.width / realSize.width
-            height = realSize.height * scaleRatio
-            y = -(height - scaledSize.height) / 2
+            }
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
-        
-        let frame = CGRect(x: scaledFrame.origin.x + x,
-                           y: scaledFrame.origin.y + y,
-                           width: width,
-                           height: height)
-        return frame
     }
 }
