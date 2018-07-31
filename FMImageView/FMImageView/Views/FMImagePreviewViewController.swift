@@ -46,9 +46,7 @@ class FMImagePreviewViewController: UIViewController {
         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         scrollView.backgroundColor = UIColor.clear
         scrollView._delegate = self
-        
-        FMAlert.shared.__delegate = self
-        
+
         self.view = scrollView
         
         if let fromImage = self.image {
@@ -89,45 +87,7 @@ class FMImagePreviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         parentVC?.mDelegate = self
     }
-    
-    private func updateImage() {
-        guard let imageURL = self.imageURL else {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.parentVC?.swipeInteractionController?.disable()
-            
-            FMLoadingView.shared.show(inView: self.parentVC?.view)
-        }
-        
-        ImageLoader.sharedLoader.imageForUrl(url: imageURL) { (image, urlString, error) in
-            if let _ = error {
-                DispatchQueue.main.async {
-                    FMAlert.shared.show(inView: self.parentVC?.view, message: "Whoops! Something went wrong.\nPlease try again!")
-                }
-                
-            }
-            
-            if let image = image {
-                self.scrollView.displayImage(image)
-                
-                if let extraColor = image.extractColor() {
-                    guard let _ = self.parentVC?.view.backgroundColor else {
-                        self.parentVC?.view.backgroundColor = UIColor(hexString: extraColor, alpha: 1.0)
-                        return
-                    }
-                }
-            }
-            
-            DispatchQueue.main.async {
-                self.parentVC?.swipeInteractionController?.enable()
-                
-                FMLoadingView.shared.hide()
-            }
-        }
-    }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         DispatchQueue.main.async {
@@ -141,16 +101,6 @@ class FMImagePreviewViewController: UIViewController {
     }
     
 }
-
-extension FMImagePreviewViewController: RefreshProtocol {
-    func refreshHandling() {
-        DispatchQueue.main.async {
-            FMAlert.shared.hide()
-        }
-        updateImage()
-    }
-}
-
 
 extension FMImagePreviewViewController: ImagePreviewFMDelegate {
     func notificationHandlingModal(type: TypeName.Modal) {

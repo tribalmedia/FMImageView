@@ -20,14 +20,14 @@ class FMAlert {
   
     static let shared = FMAlert()
     
-    weak var __delegate: RefreshProtocol?
+    weak var delegate: RefreshProtocol?
     
     private init() {
         let heightTranparentView = UIScreen.main.bounds.width - Constants.Layout.cHeightTV - Constants.Layout.cHeightBV
         
         self.transparentView = UIView(frame: CGRect(x: 0, y: Constants.Layout.cHeightTV, width: UIScreen.main.bounds.width, height: heightTranparentView))
         
-        self.transparentView.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        self.transparentView.backgroundColor = UIColor.clear
         
         self.refreshButton = UIButton(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
         self.refreshButton.center = self.transparentView.center
@@ -51,7 +51,7 @@ class FMAlert {
     }
     
     @objc func refresh(_ sender: UIButton) {
-        __delegate?.refreshHandling()
+        delegate?.refreshHandling()
     }
     
     func show(inView: UIView?, message: String?) {

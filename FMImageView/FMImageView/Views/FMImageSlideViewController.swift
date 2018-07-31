@@ -77,6 +77,9 @@ public class FMImageSlideViewController: UIViewController {
         self.createFirstScreen()
         // step 3
         self.configureSwipeInteractionController()
+        
+        // setup alert delegate
+        FMAlert.shared.delegate = self
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -313,13 +316,7 @@ public class FMImageSlideViewController: UIViewController {
                 if self.datasource.useURLs {
                     result.imageURL = self.datasource.selectImageURL(index: itemIndex)
                     
-                    result.image?.fm_setImage(url: result.imageURL, completed: { (image, error, extraColor) in
-                        if let image = image {
-                            result.update(image: image)
-                            
-                            self.setTupleColorBackgroundAndChangeBackgroundView(pageIndex: itemIndex, hexColor: extraColor)
-                        }
-                    })
+                    self.loadImage(forVC: result)
                 } else {
                     result.image = self.datasource.selectImage(index: itemIndex)
                 }
@@ -337,6 +334,30 @@ public class FMImageSlideViewController: UIViewController {
         }
         
         return nil
+    }
+    
+    private func loadImage(forVC vc: FMImagePreviewViewController) {
+        DispatchQueue.main.async {
+            FMLoadingView.shared.show(inView: self.view)
+        }
+        
+        self.swipeInteractionController?.disable()
+        
+        vc.image?.fm_setImage(url: vc.imageURL, completed: { (image, error, extraColor) in
+            if let image = image {
+                vc.update(image: image)
+                
+                self.setTupleColorBackgroundAndChangeBackgroundView(pageIndex: vc.itemIndex, hexColor: extraColor)
+            } else {
+                DispatchQueue.main.async {
+                    FMAlert.shared.show(inView: self.view, message: "Whoops! Something went wrong.\nPlease try again!")
+                }
+            }
+            
+            FMLoadingView.shared.hide()
+            
+            self.swipeInteractionController?.enable()
+        })
     }
     
     private func fadeOut(with duration: TimeInterval = Constants.AnimationDuration.defaultDuration) {
@@ -446,6 +467,18 @@ extension FMImageSlideViewController: ImageSlideFMDelegate {
             self.fadeOut()
         } else {
             self.fadeIn()
+        }
+    }
+}
+
+extension FMImageSlideViewController: RefreshProtocol {
+    func refreshHandling() {
+        DispatchQueue.main.async {
+            FMAlert.shared.hide()
+        }
+        
+        if let vc = self.pageViewController?.viewControllers?.first as? FMImagePreviewViewController {
+            self.loadImage(forVC: vc)
         }
     }
 }
