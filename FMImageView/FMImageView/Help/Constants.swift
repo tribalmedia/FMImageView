@@ -23,6 +23,10 @@ struct Constants {
         static let leadingDismissButton: CGFloat = 20.0
     }
     
+    struct Color {
+        static let cBackgroundColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+    }
+    
     // ScrollView
     struct Scale {
         static let cMax: CGFloat = 3.0
