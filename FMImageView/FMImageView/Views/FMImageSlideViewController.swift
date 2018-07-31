@@ -69,7 +69,9 @@ public class FMImageSlideViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Constants.Color.cBackgroundColor
+        if !self.config.isBackgroundColorByExtraColorImage {
+            self.view.backgroundColor = Constants.Color.cBackgroundColor
+        }
         
         // step 1
         self.configurePageViewController()
