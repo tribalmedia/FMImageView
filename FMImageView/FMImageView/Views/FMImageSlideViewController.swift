@@ -284,7 +284,7 @@ public class FMImageSlideViewController: UIViewController {
             self.tupleColorBacground.append((pageIndex: pageIndex, hexColor: extraColor))
         }
         
-        if !self.setBgColorHexInTupleColorBackground() {
+        if !self.setBgColorHexInTupleColorBackground() && pageIndex == self.currentPage {
             self.setBackgroundColorViewController(byHex: extraColor)
         }
         
@@ -340,11 +340,11 @@ public class FMImageSlideViewController: UIViewController {
     
     private func loadImage(forVC vc: FMImagePreviewViewController) {
         DispatchQueue.main.async {
-            FMLoadingView.shared.show(inView: self.view)
+            if vc.slideStatus == .completed {
+                FMLoadingView.shared.show(inView: self.view)
+            }
         }
-        
-        self.swipeInteractionController?.disable()
-        
+    
         vc.image?.fm_setImage(url: vc.imageURL, completed: { (image, error, extraColor) in
             if let image = image {
                 vc.update(image: image)
@@ -352,13 +352,16 @@ public class FMImageSlideViewController: UIViewController {
                 self.setTupleColorBackgroundAndChangeBackgroundView(pageIndex: vc.itemIndex, hexColor: extraColor)
             } else {
                 DispatchQueue.main.async {
+                    self.swipeInteractionController?.disable()
+                    
                     FMAlert.shared.show(inView: self.view, message: "Whoops! Something went wrong.\nPlease try again!")
                 }
             }
             
-            FMLoadingView.shared.hide()
-            
-            self.swipeInteractionController?.enable()
+            DispatchQueue.main.async {
+                FMLoadingView.shared.hide()
+                self.swipeInteractionController?.enable()
+            }
         })
     }
     

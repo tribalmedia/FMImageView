@@ -63,9 +63,8 @@ extension UIImage {
         pixel.deallocate(capacity: 4)
         #endif
         
-        if color != nil {
-//            return self.toHexString(color: color!)
-            return color!.toHexString()
+        if let color = color {
+            return color.toHexString()
         }
         return nil
     }
