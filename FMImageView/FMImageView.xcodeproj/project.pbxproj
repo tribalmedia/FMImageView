@@ -37,6 +37,7 @@
 		0969538C20B51ECE0057BFEE /* FMImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0969537E20B51ECE0057BFEE /* FMImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		096953E720B52C290057BFEE /* Image+URL+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096953E620B52C290057BFEE /* Image+URL+Size.swift */; };
 		096953E920B5531C0057BFEE /* CGImage+Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096953E820B5531C0057BFEE /* CGImage+Help.swift */; };
+		0971379A2111930200EF8AEF /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097137992111930200EF8AEF /* Array.swift */; };
 		09906A1B20E60BFC00C06D69 /* UIPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */; };
 		09906A1D20E60C3400C06D69 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09906A1C20E60C3400C06D69 /* Enums.swift */; };
 		09919DBE20EE088500FF4874 /* FMDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */; };
@@ -81,6 +82,7 @@
 		0969538B20B51ECE0057BFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		096953E620B52C290057BFEE /* Image+URL+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+URL+Size.swift"; sourceTree = "<group>"; };
 		096953E820B5531C0057BFEE /* CGImage+Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImage+Help.swift"; sourceTree = "<group>"; };
+		097137992111930200EF8AEF /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		09906A1C20E60C3400C06D69 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		09919DBD20EE088500FF4874 /* FMDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDelegateProtocol.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */,
 				AB813DC0210EE59000031206 /* UIView.swift */,
 				092B070D210F25DC00DB926A /* UIColor.swift */,
+				097137992111930200EF8AEF /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				09906A1D20E60C3400C06D69 /* Enums.swift in Sources */,
 				091922F120EA0E82009EC24B /* ImageLoader.swift in Sources */,
 				09BA00E721096D480095186C /* ConfigureZoomView.swift in Sources */,
+				0971379A2111930200EF8AEF /* Array.swift in Sources */,
 				091922F720EA340A009EC24B /* FMAlert.swift in Sources */,
 				0957AD5320EB148100616929 /* HorizontalStackView.swift in Sources */,
 				09919DBE20EE088500FF4874 /* FMDelegateProtocol.swift in Sources */,

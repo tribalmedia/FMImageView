@@ -38,6 +38,8 @@ public class FMImageSlideViewController: UIViewController {
             _ = self.setBgColorHexInTupleColorBackground()
         }
     }
+    
+    fileprivate var pointAreNotDiscolored: CGPoint = CGPoint.zero
 
     weak var mDelegate: Move?
     
@@ -73,6 +75,8 @@ public class FMImageSlideViewController: UIViewController {
             self.view.backgroundColor = Constants.Color.cBackgroundColor
         }
         
+        print(UIColor.black.add(overlay: UIColor.white.withAlphaComponent(0.5)).toHexString())
+        
         // step 1
         self.configurePageViewController()
         // step 2
@@ -82,6 +86,8 @@ public class FMImageSlideViewController: UIViewController {
         
         // setup alert delegate
         FMAlert.shared.delegate = self
+        
+        self.currentPage = self.config.initIndex
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +151,17 @@ public class FMImageSlideViewController: UIViewController {
         
         self.pageViewController!.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.pageViewController!.didMove(toParentViewController: self)
+        
+        // mark delegate for pageViewController
+        self.configScrollDelegate()
+    }
+    
+    private func configScrollDelegate() {
+        for subView in self.pageViewController!.view.subviews {
+            if let scrollView = subView as? UIScrollView {
+                scrollView.delegate = self
+            }
+        }
     }
     
     private func createFirstScreen() {
@@ -261,17 +278,15 @@ public class FMImageSlideViewController: UIViewController {
     // ***********************************************
     
     private func setBgColorHexInTupleColorBackground() -> Bool {
-        if self.tupleColorBacground.contains(where: { ($0.pageIndex == self.currentPage) }) {
-            for value in self.tupleColorBacground {
-                if value.pageIndex == self.currentPage {
-                    
-                    self.setBackgroundColorViewController(byHex: value.hexColor)
-
-                    return true
-                }
+        if self.tupleColorBacground.isEmpty { return false }
+        
+        for value in self.tupleColorBacground {
+            if value.pageIndex == self.currentPage {
+                
+                self.setBackgroundColorViewController(byHex: value.hexColor)
+                
+                return true
             }
-            
-            return false
         }
         
         return false
@@ -280,7 +295,8 @@ public class FMImageSlideViewController: UIViewController {
     private func setTupleColorBackgroundAndChangeBackgroundView(pageIndex: Int, hexColor: String?) {
         guard let extraColor = hexColor else { return }
         
-        if self.tupleColorBacground.count < self.datasource.total() {
+        if self.tupleColorBacground.count < self.datasource.total() &&
+            !self.tupleColorBacground.contains(where: { ($0.pageIndex == pageIndex) }) {
             self.tupleColorBacground.append((pageIndex: pageIndex, hexColor: extraColor))
         }
         
@@ -393,6 +409,81 @@ public class FMImageSlideViewController: UIViewController {
             bottomView.alpha = 1
             self.view.layoutIfNeeded()
         }
+    }
+    
+    private func getHex(by pageIndex: Int) -> String {
+        if self.tupleColorBacground.isEmpty {
+            return Constants.Color.cBackgroundColor.toHexString()
+        }
+        
+        for value in self.tupleColorBacground {
+            if value.pageIndex == pageIndex {
+                return value.hexColor
+            }
+        }
+        
+        return self.tupleColorBacground.first!.hexColor
+    }
+    
+    private func getScrollDirection(scrollView: UIScrollView) -> ScrollDirection {
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
+            return ScrollDirection.left
+        }
+        
+        return ScrollDirection.right
+    }
+    
+    private func getFadeColor(direction: ScrollDirection, percentComplete: CGFloat) -> UIColor? {
+        var fadeColor: UIColor? = UIColor(hexString: self.getHex(by: self.currentPage), alpha: 1.0)
+        
+        var toIndex: Int = 0
+        
+        switch direction {
+        case .left:
+            toIndex = self.currentPage - 1
+            
+            if toIndex < 0 {
+                toIndex = 0
+            }
+        case .right:
+            toIndex = self.currentPage + 1
+            
+            if toIndex > self.datasource.total() {
+                toIndex = self.datasource.total()
+            }
+        default: break
+            // mark direction is down or up
+        }
+        
+        if self.tupleColorBacground.contains(where: { ($0.pageIndex == toIndex) }) {
+            let percent = percentComplete > 1 ? round(percentComplete) : percentComplete
+            
+            fadeColor = UIColor(hexString: self.getHex(by: self.currentPage), alpha: 1.0)
+                .fade(to: UIColor(hexString: self.getHex(by: toIndex), alpha: 1.0), withPercentage: percent)
+        }
+        
+        return fadeColor
+    }
+}
+
+extension FMImageSlideViewController: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let point = scrollView.contentOffset
+
+        if self.pointAreNotDiscolored == CGPoint.zero {
+            self.pointAreNotDiscolored = point
+            
+            return
+        }
+        
+        let percentComplete: CGFloat = fabs(point.x - self.pageViewController!.view.frame.size.width) / self.pageViewController!.view.frame.size.width
+        
+        let direction: ScrollDirection = self.getScrollDirection(scrollView: scrollView)
+        
+        UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration) {
+            self.view.backgroundColor = self.getFadeColor(direction: direction, percentComplete: percentComplete)
+        }
+    
     }
 }
 

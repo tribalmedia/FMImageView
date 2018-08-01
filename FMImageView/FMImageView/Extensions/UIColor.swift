@@ -59,4 +59,35 @@ extension UIColor {
             return nil
         }
     }
+    
+    func add(overlay: UIColor) -> UIColor {
+        var bgR: CGFloat = 0, bgG: CGFloat = 0, bgB: CGFloat = 0, bgA: CGFloat = 0
+        var fgR: CGFloat = 0, fgG: CGFloat = 0, fgB: CGFloat = 0, fgA: CGFloat = 0
+        
+        self.getRed(&bgR, green: &bgG, blue: &bgB, alpha: &bgA)
+        overlay.getRed(&fgR, green: &fgG, blue: &fgB, alpha: &fgA)
+        
+        let r = fgA * fgR + (1 - fgA) * bgR
+        let g = fgA * fgG + (1 - fgA) * bgG
+        let b = fgA * fgB + (1 - fgA) * bgB
+        
+        return UIColor(red: r, green: g, blue: b, alpha: 1.0)
+    }
+    
+    func fade(to toColor: UIColor?, withPercentage percentage: CGFloat) -> UIColor? {
+        // get the RGBA values from the colours
+        var fromRed: CGFloat = 0, fromGreen: CGFloat = 0, fromBlue: CGFloat = 0, fromAlpha: CGFloat = 0
+        self.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
+        var toRed: CGFloat = 0, toGreen: CGFloat = 0, toBlue: CGFloat = 0, toAlpha: CGFloat = 0
+        toColor?.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
+        
+        //calculate the actual RGBA values of the fade colour
+        let red: CGFloat = (toRed - fromRed) * percentage + fromRed,
+            green: CGFloat = (toGreen - fromGreen) * percentage + fromGreen,
+            blue: CGFloat = (toBlue - fromBlue) * percentage + fromBlue,
+            alpha: CGFloat = (toAlpha - fromAlpha) * percentage + fromAlpha
+        
+        // return the fade colour
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
 }

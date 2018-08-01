@@ -30,3 +30,10 @@ public enum SlideStatus {
     case pendding
     case completed
 }
+
+public enum ScrollDirection {
+    case right
+    case left
+    case down
+    case up
+}
