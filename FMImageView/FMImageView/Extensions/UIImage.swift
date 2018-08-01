@@ -63,7 +63,7 @@ extension UIImage {
         pixel.deallocate(capacity: 4)
         #endif
         
-        if let color = color {
+        if let color = color?.darker() {
             return color.toHexString()
         }
         return nil
