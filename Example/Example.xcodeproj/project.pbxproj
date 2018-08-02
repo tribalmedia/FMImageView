@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0917C0A32112FDFE008CAA8D /* FMImageViewBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0917C09F2112FDFD008CAA8D /* FMImageViewBottomView.xib */; };
+		0917C0A42112FDFE008CAA8D /* FMImageViewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917C0A22112FDFE008CAA8D /* FMImageViewBottomView.swift */; };
 		096953A920B520C50057BFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096953A820B520C50057BFEE /* AppDelegate.swift */; };
 		096953AE20B520C50057BFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 096953AC20B520C50057BFEE /* Main.storyboard */; };
 		096953B020B520C80057BFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 096953AF20B520C80057BFEE /* Assets.xcassets */; };
@@ -65,6 +67,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0917C09F2112FDFD008CAA8D /* FMImageViewBottomView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FMImageViewBottomView.xib; sourceTree = "<group>"; };
+		0917C0A22112FDFE008CAA8D /* FMImageViewBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMImageViewBottomView.swift; sourceTree = "<group>"; };
 		096953A520B520C50057BFEE /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		096953A820B520C50057BFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		096953AD20B520C50057BFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 		096953A720B520C50057BFEE /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				0917C0A22112FDFE008CAA8D /* FMImageViewBottomView.swift */,
+				0917C09F2112FDFD008CAA8D /* FMImageViewBottomView.xib */,
 				096953A820B520C50057BFEE /* AppDelegate.swift */,
 				ABAE8A8520EDBAE500383EEC /* TableViewController.swift */,
 				ABAE8A8920EDBCF600383EEC /* ImageCell.swift */,
@@ -257,6 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0917C0A32112FDFE008CAA8D /* FMImageViewBottomView.xib in Resources */,
 				096953B320B520C80057BFEE /* LaunchScreen.storyboard in Resources */,
 				09F663C220DC970000AB2B8A /* funmee.png in Resources */,
 				096953B020B520C80057BFEE /* Assets.xcassets in Resources */,
@@ -281,6 +288,7 @@
 				ABAE8A8A20EDBCF600383EEC /* ImageCell.swift in Sources */,
 				ABAE8A8620EDBAE500383EEC /* TableViewController.swift in Sources */,
 				096953A920B520C50057BFEE /* AppDelegate.swift in Sources */,
+				0917C0A42112FDFE008CAA8D /* FMImageViewBottomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

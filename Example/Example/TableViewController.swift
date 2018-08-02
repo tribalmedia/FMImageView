@@ -11,7 +11,7 @@ import FMImageView
 
 class TableViewController: UITableViewController {
     
-    @IBOutlet var bottomView: UIView!
+    @IBOutlet var bottomView: FMImageViewBottomView!
     private var presentedPhotoIndex: Int?
     
     var vc: FMImageSlideViewController?
@@ -29,7 +29,6 @@ class TableViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 200
         
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -89,26 +88,13 @@ extension TableViewController {
         
         config.isBackgroundColorByExtraColorImage = true
         
-        config.bottomView = HorizontalStackView(view: self.bottomView)
+        config.bottomView = HorizontalStackView(view: FMImageViewBottomView())
         
         self.vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: arrayURL), config: config)
         
         self.vc?.tempolaryIndexPath = index
         
         self.vc?.fmInteractionDelegate = self
-        
-        
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "icn_like"), for: .normal)
-        button.addTarget(self, action: #selector(target1(_:)), for: .touchUpInside)
-        let label = UILabel()
-        label.text = "10"
-        
-        let button1 = UIButton()
-        button1.setImage(#imageLiteral(resourceName: "icn_comment"), for: .normal)
-        button1.addTarget(self, action: #selector(target2(_:)), for: .touchUpInside)
-        let label1 = UILabel()
-        label1.text = "20"
 
         vc?.view.frame = UIScreen.main.bounds
         

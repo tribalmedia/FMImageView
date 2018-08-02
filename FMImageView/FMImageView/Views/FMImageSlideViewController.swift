@@ -366,7 +366,7 @@ public class FMImageSlideViewController: UIViewController {
     private func loadImage(forVC vc: FMImagePreviewViewController) {
         DispatchQueue.main.async {
             if vc.slideStatus == .completed {
-                FMLoadingView.shared.show(inView: self.view)
+//                FMLoadingView.shared.show(inView: self.view)
             }
         }
     
