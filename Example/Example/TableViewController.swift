@@ -52,21 +52,76 @@ class TableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return arrayURL.count
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //        self.presentedPhotoIndex = indexPath.row
+        //        let cell = tableView.cellForRow(at: indexPath) as! ImageCell
+        //        self.presentPhotoViewer(fromImageView: cell.photoImageView, index: indexPath.row)
+    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! ImageCell
         
-        ImageLoader.sharedLoader.imageForUrl(url: self.arrayURL[indexPath.row]) { (image, urlString, networkErr) in
-            cell.photoImageView.image = image
+//        ImageLoader.sharedLoader.imageForUrl(url: self.arrayURL[indexPath.row]) { (image, urlString, networkErr) in
+//            cell.photoImageView.image = image
+//        }
+        
+        cell.presentFMImageView = { [unowned self]
+            (_ index: Int, _ imageView: UIImageView, _ photoURLs: [URL]) -> Void in
+            let subView = self.createSubViewInFMImageSlideView(indexPath: indexPath)
+            
+            let fmImageVC = self.configFMImageView(fromImage: imageView, initIndex: index, photoURLs: photoURLs, subView: subView)
+            fmImageVC.didMoveToViewControllerHandler = { index in
+                let imageViewAtIndex = cell.photoGrid.getImageView(index: index)
+                fmImageVC.setNewDestinatonFrame(imageView: imageViewAtIndex)
+            }
+            
+            self.present(fmImageVC, animated: true, completion: nil)
         }
+        cell.updateCell()
         
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.presentedPhotoIndex = indexPath.row
-        let cell = tableView.cellForRow(at: indexPath) as! ImageCell
-        self.presentPhotoViewer(fromImageView: cell.photoImageView, index: indexPath.row)
+    private func configFMImageView(fromImage: UIImageView, initIndex: Int, photoURLs: [URL], subView: [FMTuple]) -> FMImageSlideViewController {
+        let vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: photoURLs), config: Config(initImageView: fromImage, initIndex: initIndex))
+        
+        vc.subAreaBottomView = subView
+        
+        vc.view.frame = self.view.frame
+        
+        return vc
+    }
+    
+    @objc func target1(_ sender: UIButton) {
+        print(#function)
+    }
+    
+    @objc func target2(_ sender: UIButton) {
+        print(#function)
+    }
+    
+    private func createSubViewInFMImageSlideView(indexPath: IndexPath) -> [FMTuple] {
+        var views: [FMTuple] = []
+        
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "icn_like"), for: .normal)
+        button.addTarget(self, action: #selector(target1(_:)), for: .touchUpInside)
+        let label = UILabel()
+        label.text = "0"
+        
+        
+        views.append(FMTuple(button, label))
+        
+        let button1 = UIButton()
+        button1.setImage(#imageLiteral(resourceName: "icn_comment"), for: .normal)
+        button1.addTarget(self, action: #selector(target2(_:)), for: .touchUpInside)
+        let label1 = UILabel()
+        label1.text = "1"
+        
+        views.append(FMTuple(button1, label1))
+        
+        return views
     }
     
 }
@@ -92,16 +147,14 @@ extension TableViewController {
         
         vc?.view.frame = UIScreen.main.bounds
         
+        vc?.didMoveToViewControllerHandler = { number in
+            let indexPath = IndexPath(row: number, section: 0)
+            let cell = self.tableView.cellForRow(at: indexPath) as! ImageCell
+            let destFrame = cell.photoImageView.convert(cell.photoImageView.bounds, to: self.tableView)
+            print("number: \(number)")
+            print("destFrame: \(destFrame)")
+        }
+        
         self.present(vc!, animated: true, completion: nil)
-    }
-    
-    
-    
-    @objc func target1(_ sender: UIButton) {
-        print(#function)
-    }
-    
-    @objc func target2(_ sender: UIButton) {
-        print(#function)
     }
 }

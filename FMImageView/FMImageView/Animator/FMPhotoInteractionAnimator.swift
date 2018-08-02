@@ -17,6 +17,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
 
     // MARK: - Private
     
+    private var destFrame: CGRect?
     private var transitionContext: UIViewControllerContextTransitioning?
     private var shouldCompleteTransition = false
     private weak var viewController: FMImageSlideViewController!
@@ -182,6 +183,9 @@ extension FMPhotoInteractionAnimator:  UIViewControllerTransitioningDelegate {
     }
     
     private func getOriginFrameForTransition() -> CGRect {
+        if let destFrame = self.viewController.getNewDestinatonFrame() {
+            return destFrame
+        }
         return self.originFrameForTransition ?? CGRect.zero
     }
 }
