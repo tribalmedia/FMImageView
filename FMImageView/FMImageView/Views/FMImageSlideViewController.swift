@@ -8,6 +8,10 @@
 
 import UIKit
 
+public protocol FMInteration: class {
+    func resetOriginFrame(imageIndex: Int, view: UIView, indexPath: IndexPath?)
+}
+
 public class FMImageSlideViewController: UIViewController {
     
     // ***********************************************
@@ -15,7 +19,9 @@ public class FMImageSlideViewController: UIViewController {
     // ***********************************************
     
     // public
-    public var subAreaBottomView: [FMTuple] = []
+    public var fmInteractionDelegate: FMInteration?
+    
+    public var tempolaryIndexPath: IndexPath?
     
     // internal
     var topView: UIView?
@@ -36,6 +42,8 @@ public class FMImageSlideViewController: UIViewController {
     private var currentPage: Int = 0 {
         didSet {
             _ = self.setBgColorHexInTupleColorBackground()
+            
+            self.fmInteractionDelegate?.resetOriginFrame(imageIndex: self.currentPage, view: self.view, indexPath: self.tempolaryIndexPath)
         }
     }
     
@@ -74,8 +82,6 @@ public class FMImageSlideViewController: UIViewController {
         if !self.config.isBackgroundColorByExtraColorImage {
             self.view.backgroundColor = Constants.Color.cBackgroundColor
         }
-        
-        print(UIColor.black.add(overlay: UIColor.white.withAlphaComponent(0.5)).toHexString())
         
         // step 1
         self.configurePageViewController()
@@ -206,9 +212,7 @@ public class FMImageSlideViewController: UIViewController {
     private func configSubviewViewController() {
         setupTopSubView()
         
-        if !self.subAreaBottomView.isEmpty {
-            setupBottomSubView()
-        }
+        setupBottomSubView()
     }
     
     private func setupTopSubView() {
@@ -254,10 +258,15 @@ public class FMImageSlideViewController: UIViewController {
     }
     
     private func setupBottomSubView() {
-        self.bottomView = HorizontalStackView(items: self.subAreaBottomView)
+        guard let bottomView = self.config.bottomView else {
+            return
+        }
         
+        self.bottomView = bottomView
         self.view.addSubview(self.bottomView!)
         
+        // setup layout
+        self.bottomView!.heightAnchor.constraint(equalToConstant: Constants.Layout.cHeightBV).isActive = true
         self.bottomView!.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         self.bottomView!.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         self.bottomConstraintStackView = self.bottomView!.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)

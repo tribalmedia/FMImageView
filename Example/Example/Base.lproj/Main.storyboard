@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -52,8 +53,29 @@
                             <outlet property="delegate" destination="lqv-n0-ovR" id="5jE-iT-RZa"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="bottomView" destination="DSv-RT-Ia5" id="1AP-nn-16g"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BFW-oq-uFn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="DSv-RT-Ia5">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJB-6r-ebe">
+                            <rect key="frame" x="72" y="5" width="96" height="30"/>
+                            <state key="normal" title="FMImageView">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="HJB-6r-ebe" firstAttribute="centerX" secondItem="DSv-RT-Ia5" secondAttribute="centerX" id="JHD-Eh-QRR"/>
+                        <constraint firstItem="HJB-6r-ebe" firstAttribute="centerY" secondItem="DSv-RT-Ia5" secondAttribute="centerY" id="fgN-XW-Zj9"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="hV0-Rb-oIK"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1488.8" y="31.934032983508249"/>
         </scene>

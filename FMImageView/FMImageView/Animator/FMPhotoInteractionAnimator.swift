@@ -20,7 +20,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
     private var transitionContext: UIViewControllerContextTransitioning?
     private var shouldCompleteTransition = false
     private weak var viewController: FMImageSlideViewController!
-    fileprivate var originFrameForTransition: CGRect?
+    public var originFrameForTransition: CGRect?
     lazy private var panGestureRecognizer: UIPanGestureRecognizer = {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         

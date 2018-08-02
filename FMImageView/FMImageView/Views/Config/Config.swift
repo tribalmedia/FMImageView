@@ -14,6 +14,8 @@ public struct Config {
     
     public var isBackgroundColorByExtraColorImage: Bool = false
     
+    public var bottomView: HorizontalStackView?
+    
     public init(initImageView: UIImageView, initIndex: Int) {
         self.initImageView = initImageView
         self.initIndex = initIndex

@@ -11,6 +11,7 @@ import FMImageView
 
 class TableViewController: UITableViewController {
     
+    @IBOutlet var bottomView: UIView!
     private var presentedPhotoIndex: Int?
     
     var vc: FMImageSlideViewController?
@@ -66,18 +67,37 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.presentedPhotoIndex = indexPath.row
         let cell = tableView.cellForRow(at: indexPath) as! ImageCell
-        self.presentPhotoViewer(fromImageView: cell.photoImageView, index: indexPath.row)
+        self.presentPhotoViewer(fromImageView: cell.photoImageView, index: indexPath)
     }
     
 }
 
+extension TableViewController: FMInteration {
+    func resetOriginFrame(imageIndex: Int, view: UIView, indexPath: IndexPath?) {
+        guard let indexPath = indexPath, let cell = self.tableView.cellForRow(at: IndexPath(row: imageIndex, section: indexPath.section)) as? ImageCell else {
+            return
+        }
+        
+        let oFrame: CGRect = cell.photoImageView.convert(cell.photoImageView.bounds, to: view)
+        self.vc?.swipeInteractionController?.originFrameForTransition = oFrame
+    }
+}
+
 extension TableViewController {
-    private func presentPhotoViewer(fromImageView: UIImageView?, index: Int = 0) {
-        var config = Config(initImageView: fromImageView!, initIndex: index)
+    private func presentPhotoViewer(fromImageView: UIImageView?, index: IndexPath) {
+        var config = Config(initImageView: fromImageView!, initIndex: index.row)
         
         config.isBackgroundColorByExtraColorImage = true
         
+        config.bottomView = HorizontalStackView(view: self.bottomView)
+        
         self.vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: arrayURL), config: config)
+        
+        self.vc?.tempolaryIndexPath = index
+        
+        self.vc?.fmInteractionDelegate = self
+        
+        
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "icn_like"), for: .normal)
         button.addTarget(self, action: #selector(target1(_:)), for: .touchUpInside)
@@ -89,11 +109,7 @@ extension TableViewController {
         button1.addTarget(self, action: #selector(target2(_:)), for: .touchUpInside)
         let label1 = UILabel()
         label1.text = "20"
-        
-        vc?.subAreaBottomView.append((button: button, label: label))
-        vc?.subAreaBottomView.append((button: button1, label: label1))
-        
-        
+
         vc?.view.frame = UIScreen.main.bounds
         
         self.present(vc!, animated: true, completion: nil)
