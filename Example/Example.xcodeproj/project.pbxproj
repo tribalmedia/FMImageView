@@ -15,6 +15,7 @@
 		096953D720B5216D0057BFEE /* FMImageView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 096953CF20B520E10057BFEE /* FMImageView.framework */; };
 		096953D820B5216D0057BFEE /* FMImageView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 096953CF20B520E10057BFEE /* FMImageView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		09F663C220DC970000AB2B8A /* funmee.png in Resources */ = {isa = PBXBuildFile; fileRef = 09F663C120DC970000AB2B8A /* funmee.png */; };
+		AB5E53032112A14700F24D8A /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E53002112A14700F24D8A /* PhotoGrid.swift */; };
 		ABAE8A8620EDBAE500383EEC /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE8A8520EDBAE500383EEC /* TableViewController.swift */; };
 		ABAE8A8A20EDBCF600383EEC /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE8A8920EDBCF600383EEC /* ImageCell.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		096953BF20B520C80057BFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		096953C820B520E10057BFEE /* FMImageView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FMImageView.xcodeproj; path = ../FMImageView/FMImageView.xcodeproj; sourceTree = "<group>"; };
 		09F663C120DC970000AB2B8A /* funmee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = funmee.png; sourceTree = "<group>"; };
+		AB5E53002112A14700F24D8A /* PhotoGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
 		ABAE8A8520EDBAE500383EEC /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		ABAE8A8920EDBCF600383EEC /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 		096953A720B520C50057BFEE /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				AB5E53002112A14700F24D8A /* PhotoGrid.swift */,
 				096953A820B520C50057BFEE /* AppDelegate.swift */,
 				ABAE8A8520EDBAE500383EEC /* TableViewController.swift */,
 				ABAE8A8920EDBCF600383EEC /* ImageCell.swift */,
@@ -280,6 +283,7 @@
 			files = (
 				ABAE8A8A20EDBCF600383EEC /* ImageCell.swift in Sources */,
 				ABAE8A8620EDBAE500383EEC /* TableViewController.swift in Sources */,
+				AB5E53032112A14700F24D8A /* PhotoGrid.swift in Sources */,
 				096953A920B520C50057BFEE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

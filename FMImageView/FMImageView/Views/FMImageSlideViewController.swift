@@ -16,6 +16,8 @@ public class FMImageSlideViewController: UIViewController {
     
     // public
     public var subAreaBottomView: [FMTuple] = []
+    public var didMoveToViewControllerHandler: ((Int) -> Void)?
+    public var swipeInteractionController: FMPhotoInteractionAnimator?
     
     // internal
     var topView: UIView?
@@ -33,13 +35,13 @@ public class FMImageSlideViewController: UIViewController {
     weak var mDelegate: Move?
     
     // outlets
+    private var destinationFrame: CGRect?
     private var dismissButton: UIButton!
     private var numberImageLabel: UILabel!
     
     private var topConstrainTopView: NSLayoutConstraint?
     private var bottomConstraintStackView: NSLayoutConstraint?
     
-    public var swipeInteractionController: FMPhotoInteractionAnimator?
     
     // default init
     public init(config: Config) {
@@ -116,6 +118,17 @@ public class FMImageSlideViewController: UIViewController {
         } else {
             self.view.topAnchor.constraint(equalTo: topLayoutGuide.topAnchor, constant: 0).isActive = true
         }
+    }
+    
+    // MARK: Public functions
+    
+    public func setNewDestinatonFrame(imageView: UIImageView) {
+        let destFrame =  imageView.convert(imageView.bounds, to: self.view)
+        self.destinationFrame = destFrame
+    }
+    
+    public func getNewDestinatonFrame() -> CGRect? {
+        return self.destinationFrame
     }
     
     private func configurePageViewController() {
@@ -349,6 +362,7 @@ extension FMImageSlideViewController: UIPageViewControllerDelegate {
         if let vc = pageViewController.viewControllers?.first as? FMImagePreviewViewController {
             self.updateUINumberImageLabel(numerator: vc.itemIndex)
             vc.slideStatus = .completed
+            self.didMoveToViewControllerHandler?(vc.itemIndex)
         }
     }
     
