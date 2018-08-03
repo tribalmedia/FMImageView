@@ -15,12 +15,13 @@ class TableViewController: UITableViewController {
     private var presentedPhotoIndex: Int?
     
     var vc: FMImageSlideViewController?
-    
+
     let arrayURL = [
-        URL(string: "https://media.funmee.jp/medias/6a6bdd8326c225b806021f39e19ed97b1cff8cc5/large.jpg")!,
-        URL(string: "https://media.funmee.jp/medias/abbdda21d9c5859871bb88b521f6b4d2ab41601a/large.jpg")!,
-        URL(string: "https://media.funmee.jp/medias/2833d8826ab34e3b9304b62bd3b4bda0164f8004/large.JPG")!,
-        URL(string: "https://media.funmee.jp/medias/c455f72e904fbe0b22f44084c785f63a5367a54d/large.jpg")!
+        URL(string: "https://media-fnm-dev-web01.tmh-sd.com/medias/8f3a32213b6c205bb8e6891e9081394ce0b30e93/large.jpg")!,
+        URL(string: "https://media-fnm-dev-web01.tmh-sd.com/medias/eccb36753bbee8137f4ac0c492faa6fe693b4ad3/large.jpg")!,
+        URL(string: "https://media-fnm-dev-web01.tmh-sd.com/medias/350791419d1c326111fc80d942eb591cc5e38d0d/large.jpg")!,
+        URL(string: "https://media-fnm-dev-web01.tmh-sd.com/medias/d29e658df63a26d9131a2ca8ea17934eb84820e8/large.jpg")!,
+        URL(string: "https://media-fnm-dev-web01.tmh-sd.com/medias/0b76479fc8baa98d9d06323293ca37c888ab178e/large.jpg")!
     ]
 
     override func viewDidLoad() {

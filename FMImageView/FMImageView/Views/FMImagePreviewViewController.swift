@@ -54,7 +54,7 @@ class FMImagePreviewViewController: UIViewController {
                 self.scrollView.displayImage(fromImage)
             }
             
-            if let extraColor = fromImage.extractColor() {
+            if let extraColor = fromImage.averageColor {
                 guard let _ = self.parentVC?.view.backgroundColor else {
                     if self.parentVC!.tupleColorBacground.count < self.parentVC!.datasource.total() {
                         self.parentVC?.tupleColorBacground.append((pageIndex: self.itemIndex, hexColor: extraColor))

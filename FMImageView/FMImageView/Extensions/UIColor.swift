@@ -28,17 +28,31 @@ extension UIColor {
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
     
-    func toHexString() -> String {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
+    func hexString(withAlpha hasAlpha: Bool = false) -> String? {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         
-        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        getRed(&r, green: &g, blue: &b, alpha: &a)
         
-        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+        guard r >= 0 && r <= 1 && g >= 0 && g <= 1 && b >= 0 && b <= 1 else {
+            return nil
+        }
         
-        return String(format:"#%06x", rgb)
+        func makeChannel(with percentage: CGFloat) -> Int {
+            return Int(percentage * 255)
+        }
+        
+        guard hasAlpha else {
+            return String(format: "#%02X%02X%02X",
+                          makeChannel(with: r),
+                          makeChannel(with: g),
+                          makeChannel(with: b))
+        }
+        
+        return String(format: "#%02X%02X%02X%02X",
+                      makeChannel(with: r),
+                      makeChannel(with: g),
+                      makeChannel(with: b),
+                      makeChannel(with: a))
     }
     
     

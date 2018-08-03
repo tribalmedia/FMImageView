@@ -318,7 +318,7 @@ public class FMImageSlideViewController: UIViewController {
     private func setBackgroundColorViewController(byHex hex: String) {
         if self.config.isBackgroundColorByExtraColorImage {
             if let bg = self.view.backgroundColor {
-                if bg.toHexString() == hex { return }
+                if bg.hexString() == hex { return }
             }
             
             UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
@@ -366,7 +366,7 @@ public class FMImageSlideViewController: UIViewController {
     private func loadImage(forVC vc: FMImagePreviewViewController) {
         DispatchQueue.main.async {
             if vc.slideStatus == .completed {
-//                FMLoadingView.shared.show(inView: self.view)
+                FMLoadingView.shared.show(inView: self.view)
             }
         }
     
@@ -385,6 +385,7 @@ public class FMImageSlideViewController: UIViewController {
             
             DispatchQueue.main.async {
                 FMLoadingView.shared.hide()
+                
                 self.swipeInteractionController?.enable()
             }
         })
@@ -422,7 +423,7 @@ public class FMImageSlideViewController: UIViewController {
     
     private func getHex(by pageIndex: Int) -> String {
         if self.tupleColorBacground.isEmpty {
-            return Constants.Color.cBackgroundColor.toHexString()
+            return Constants.Color.cBackgroundColor.hexString()!
         }
         
         for value in self.tupleColorBacground {

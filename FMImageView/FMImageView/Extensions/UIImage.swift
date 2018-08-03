@@ -29,61 +29,22 @@ extension UIImage {
         
     }
     
-    /**
-     Returns an color hex (String)
-     */
-    func extractColor() -> String? {
-        guard let cgimage = self.cgImage else {
-            return nil
+    var averageColor: String? {
+        guard let inputImage = CIImage(image: self) else { return nil }
+        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
+        
+        guard let filter = CIFilter(name: "CIAreaAverage", withInputParameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
+        guard let outputImage = filter.outputImage else { return nil }
+        
+        var bitmap = [UInt8](repeating: 0, count: 4)
+        let context = CIContext(options: [kCIContextWorkingColorSpace: kCFNull])
+        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: kCIFormatRGBA8, colorSpace: nil)
+        
+        if let colorHex = UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255).hexString() {
+            return colorHex
         }
         
-        let pixel = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
-        let colorSpace: CGColorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-        let context = CGContext(data: pixel, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
-        context?.draw(cgimage, in: CGRect(x: 0, y: 0, width: 1, height: 1))
-        
-        var color: UIColor?
-        
-        if pixel[3] > 0 {
-            let alpha:CGFloat = CGFloat(pixel[3]) / 255.0
-            let multiplier:CGFloat = alpha / 255.0
-            
-            color = UIColor(red: CGFloat(pixel[0]) * multiplier, green: CGFloat(pixel[1]) * multiplier, blue: CGFloat(pixel[2]) * multiplier, alpha: alpha)
-        }else{
-            
-            color = UIColor(red: CGFloat(pixel[0]) / 255.0, green: CGFloat(pixel[1]) / 255.0, blue: CGFloat(pixel[2]) / 255.0, alpha: CGFloat(pixel[3]) / 255.0)
-        }
-        
-        #if swift(>=4.1)
-        pixel.deinitialize(count: 4)
-        pixel.deallocate()
-        #else
-        pixel.deinitialize()
-        pixel.deallocate(capacity: 4)
-        #endif
-        
-        if let color = color?.darker() {
-            return color.toHexString()
-        }
         return nil
-    }
-    
-    /**
-     Convert color to hex
-     - parameter color: UIColor
-     */
-    func toHexString(color: UIColor) -> String {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
-        
-        color.getRed(&r, green: &g, blue: &b, alpha: &a)
-        
-        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
-        
-        return String(format:"#%06x", rgb)
     }
     
     func fm_setImage(url: URL?, completed: @escaping (_ image: UIImage?,_ error: NetworkingErrors?, _ extraColorHex: String?) -> ()) {
@@ -115,7 +76,7 @@ extension UIImage {
         
         downloadDispatchGroup.notify(queue: DispatchQueue.main) {
             guard let error = _error else {
-                if let img = _image, let hex = img.extractColor() {
+                if let img = _image, let hex = img.averageColor {
                     completed(_image, nil, hex)
                     
                     return
