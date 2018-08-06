@@ -55,37 +55,21 @@ extension UIColor {
                       makeChannel(with: a))
     }
     
-    
-    // Get darker color variations for a given UIColor
-    func darker(by percentage: CGFloat = 30.0) -> UIColor? {
-        return self.adjust(by: -1 * abs(percentage) )
+    func darker(amount : CGFloat = 0.3) -> UIColor {
+        return hueColorWithBrightnessAmount(amount: 1 - amount)
     }
     
-    func adjust(by percentage: CGFloat = 30.0) -> UIColor? {
-        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-        
-        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
-            return UIColor(red: min(red + percentage / 100, 1.0),
-                           green: min(green + percentage / 100, 1.0),
-                           blue: min(blue + percentage / 100, 1.0),
-                           alpha: alpha)
+    private func hueColorWithBrightnessAmount(amount: CGFloat) -> UIColor {
+        var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
+
+        if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            return UIColor( hue: hue,
+                            saturation: saturation,
+                            brightness: brightness * amount,
+                            alpha: alpha )
         } else {
-            return nil
+            return self
         }
-    }
-    
-    func add(overlay: UIColor) -> UIColor {
-        var bgR: CGFloat = 0, bgG: CGFloat = 0, bgB: CGFloat = 0, bgA: CGFloat = 0
-        var fgR: CGFloat = 0, fgG: CGFloat = 0, fgB: CGFloat = 0, fgA: CGFloat = 0
-        
-        self.getRed(&bgR, green: &bgG, blue: &bgB, alpha: &bgA)
-        overlay.getRed(&fgR, green: &fgG, blue: &fgB, alpha: &fgA)
-        
-        let r = fgA * fgR + (1 - fgA) * bgR
-        let g = fgA * fgG + (1 - fgA) * bgG
-        let b = fgA * fgB + (1 - fgA) * bgB
-        
-        return UIColor(red: r, green: g, blue: b, alpha: 1.0)
     }
     
     func fade(to toColor: UIColor?, withPercentage percentage: CGFloat) -> UIColor? {

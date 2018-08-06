@@ -55,6 +55,8 @@ class ImageZoomView: UIScrollView {
         self.bouncesZoom = true
         self.decelerationRate = UIScrollViewDecelerationRateFast
         self.delegate = self
+        
+        self.zoomScale = Constants.Scale.cMin
     }
     
     func moveScrollViewFrame(_ sender: UIPanGestureRecognizer) {
@@ -134,9 +136,9 @@ class ImageZoomView: UIScrollView {
             self._imageView = nil
         }
         
-        self.zoomScale = Constants.Scale.cMin
-        
         self._imageView = UIImageView(image: image)
+        
+        self._imageView?.setNeedsDisplay()
         
         _pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureTarget(_:)))
         self.addGestureRecognizer(_pinchGestureRecognizer!)

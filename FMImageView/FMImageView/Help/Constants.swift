@@ -25,6 +25,7 @@ struct Constants {
     
     struct Color {
         static let cBackgroundColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        static let cBackgroundColorHex: String = "#000000"
     }
     
     // ScrollView

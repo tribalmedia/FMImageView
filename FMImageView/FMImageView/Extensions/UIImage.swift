@@ -28,67 +28,36 @@ extension UIImage {
         self.init(ciImage: CIImage(image: image)!)
         
     }
-    
-    var averageColor: String? {
-        guard let inputImage = CIImage(image: self) else { return nil }
-        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
-        
-        guard let filter = CIFilter(name: "CIAreaAverage", withInputParameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
-        guard let outputImage = filter.outputImage else { return nil }
-        
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext(options: [kCIContextWorkingColorSpace: kCFNull])
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: kCIFormatRGBA8, colorSpace: nil)
-        
-        if let colorHex = UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255).hexString() {
-            return colorHex
-        }
-        
-        return nil
-    }
-    
-    func fm_setImage(url: URL?, completed: @escaping (_ image: UIImage?,_ error: NetworkingErrors?, _ extraColorHex: String?) -> ()) {
-        guard let url = url else {
-            completed(nil, .customError("URL not found !"), nil)
-            return
-        }
-        
-        
-        let downloadDispatchGroup = DispatchGroup()
-        
-        downloadDispatchGroup.enter()
 
-        var _image: UIImage?
-        var _error: NetworkingErrors?
-        
-        ImageLoader.sharedLoader.imageForUrl(url: url) { (image, urlString, error) in
-            if let _ = error {
-                // mark code
-                _error = error
-                
-                downloadDispatchGroup.leave()
-            }
-            
-            _image = image
-            
-            downloadDispatchGroup.leave()
-        }
-        
-        downloadDispatchGroup.notify(queue: DispatchQueue.main) {
-            guard let error = _error else {
-                if let img = _image, let hex = img.averageColor {
-                    completed(_image, nil, hex)
-                    
-                    return
-                }
-                
-                completed(_image, nil, nil)
-                
-                return
-            }
-            
-            completed(_image, error, nil)
-        }
-    }
     
+    func areaAverage(success: @escaping (UIColor) -> ()) {
+        var bitmap = [UInt8](repeating: 0, count: 4)
+        
+        if #available(iOS 9.0, *) {
+            // Get average color.
+            let context = CIContext()
+            let inputImage: CIImage = ciImage ?? CoreImage.CIImage(cgImage: cgImage!)
+            let extent = inputImage.extent
+            let inputExtent = CIVector(x: extent.origin.x, y: extent.origin.y, z: extent.size.width, w: extent.size.height)
+            let filter = CIFilter(name: "CIAreaAverage", withInputParameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: inputExtent])!
+            let outputImage = filter.outputImage!
+            let outputExtent = outputImage.extent
+            assert(outputExtent.size.width == 1 && outputExtent.size.height == 1)
+            
+            // Render to bitmap.
+            context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: kCIFormatRGBA8, colorSpace: CGColorSpaceCreateDeviceRGB())
+        } else {
+            // Create 1x1 context that interpolates pixels when drawing to it.
+            let context = CGContext(data: &bitmap, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+            let inputImage = cgImage ?? CIContext().createCGImage(ciImage!, from: ciImage!.extent)
+            
+            // Render to bitmap.
+            context.draw(inputImage!, in: CGRect(x: 0, y: 0, width: 1, height: 1))
+        }
+        
+        // Compute result.
+        let result = UIColor(red: CGFloat(bitmap[0]) / 255.0, green: CGFloat(bitmap[1]) / 255.0, blue: CGFloat(bitmap[2]) / 255.0, alpha: CGFloat(bitmap[3]) / 255.0).darker()
+        
+        success(result)
+    }
 }

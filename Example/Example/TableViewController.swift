@@ -86,10 +86,10 @@ extension TableViewController: FMInteration {
 extension TableViewController {
     private func presentPhotoViewer(fromImageView: UIImageView?, index: IndexPath) {
         var config = Config(initImageView: fromImageView!, initIndex: index.row)
-        
-        config.isBackgroundColorByExtraColorImage = true
-        
+ 
         config.bottomView = HorizontalStackView(view: FMImageViewBottomView())
+        
+//        config.backgroundColor = .black
         
         self.vc = FMImageSlideViewController(datasource: FMImageDataSource(imageURLs: arrayURL), config: config)
         

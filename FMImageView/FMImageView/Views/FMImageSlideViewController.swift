@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias TuplePageColor = (pageIndex: Int, hexColor: String?)
+
 public protocol FMInteration: class {
     func resetOriginFrame(imageIndex: Int, view: UIView, indexPath: IndexPath?)
 }
@@ -36,12 +38,12 @@ public class FMImageSlideViewController: UIViewController {
     
     var datasource: FMImageDataSource!
     
-    var tupleColorBacground: [(pageIndex: Int, hexColor: String)] = []
+    var tupleColorBacground: [TuplePageColor] = []
     
     // private
     private var currentPage: Int = 0 {
         didSet {
-            _ = self.setBgColorHexInTupleColorBackground()
+//            _ = self.setBgColorHexInTupleColorBackground()
             
             self.fmInteractionDelegate?.resetOriginFrame(imageIndex: self.currentPage, view: self.view, indexPath: self.tempolaryIndexPath)
         }
@@ -79,9 +81,11 @@ public class FMImageSlideViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        if !self.config.isBackgroundColorByExtraColorImage {
-            self.view.backgroundColor = Constants.Color.cBackgroundColor
+        if let bgColor = self.config.backgroundColor {
+            self.view.backgroundColor = bgColor
         }
+        
+        self.currentPage = self.config.initIndex
         
         // step 1
         self.configurePageViewController()
@@ -89,11 +93,7 @@ public class FMImageSlideViewController: UIViewController {
         self.createFirstScreen()
         // step 3
         self.configureSwipeInteractionController()
-        
-        // setup alert delegate
-        FMAlert.shared.delegate = self
-        
-        self.currentPage = self.config.initIndex
+    
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -163,23 +163,41 @@ public class FMImageSlideViewController: UIViewController {
     }
     
     private func configScrollDelegate() {
+        if let _ = config.backgroundColor { return }
+        
         for subView in self.pageViewController!.view.subviews {
             if let scrollView = subView as? UIScrollView {
                 scrollView.delegate = self
+                
+                scrollView.decelerationRate = UIScrollViewDecelerationRateNormal
             }
         }
     }
     
     private func createFirstScreen() {
-        // Create the first screen
-        if let config = self.config, let startingViewController = self.getItemController(config.initIndex) {
-            self.pageViewController?.setViewControllers([startingViewController], direction: .forward, animated: true) { (completed) in
-                self.prepareNumbersImageLabel()
-                self.prepareDismissButton()
-                
-                self.configSubviewViewController()
+        
+        guard let config = self.config, let startVC = self.getItemController(config.initIndex) as? FMImagePreviewViewController else { return }
+        
+        if self.currentPage + 1 < self.datasource.total() {
+            //Load to the viewController after the starting VC, then go back to the starting VC
+            guard let afterVC = self.getItemController(self.currentPage + 1) else { return }
+            self.pageViewController?.setViewControllers([afterVC], direction: .forward, animated: true, completion: nil)
+            
+            self.pageViewController?.setViewControllers([startVC], direction: .reverse, animated: true) { (completed) in
+                self.updateViews()
+            }
+        } else {
+            self.pageViewController?.setViewControllers([startVC], direction: .forward, animated: true) { (completed) in
+                self.updateViews()
             }
         }
+    }
+    
+    private func updateViews() {
+        self.prepareNumbersImageLabel()
+        self.prepareDismissButton()
+        
+        self.configSubviewViewController()
     }
     
     private func configureSwipeInteractionController() {
@@ -285,47 +303,12 @@ public class FMImageSlideViewController: UIViewController {
     // ***********************************************
     // MARK: UIPageViewController
     // ***********************************************
-    
-    private func setBgColorHexInTupleColorBackground() -> Bool {
-        if self.tupleColorBacground.isEmpty { return false }
+
+    func insertToTupleColorBackground(newItem: TuplePageColor) {
+        guard let extraColor = newItem.hexColor else { return }
         
-        for value in self.tupleColorBacground {
-            if value.pageIndex == self.currentPage {
-                
-                self.setBackgroundColorViewController(byHex: value.hexColor)
-                
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    private func setTupleColorBackgroundAndChangeBackgroundView(pageIndex: Int, hexColor: String?) {
-        guard let extraColor = hexColor else { return }
-        
-        if self.tupleColorBacground.count < self.datasource.total() &&
-            !self.tupleColorBacground.contains(where: { ($0.pageIndex == pageIndex) }) {
-            self.tupleColorBacground.append((pageIndex: pageIndex, hexColor: extraColor))
-        }
-        
-        if !self.setBgColorHexInTupleColorBackground() && pageIndex == self.currentPage {
-            self.setBackgroundColorViewController(byHex: extraColor)
-        }
-        
-    }
-    
-    private func setBackgroundColorViewController(byHex hex: String) {
-        if self.config.isBackgroundColorByExtraColorImage {
-            if let bg = self.view.backgroundColor {
-                if bg.hexString() == hex { return }
-            }
-            
-            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
-                self.view.backgroundColor = UIColor(hexString: hex, alpha: 1.0)
-            }, completion: { (success) in
-                
-            })
+        if self.tupleColorBacground.count < self.datasource.total() && !self.tupleColorBacground.contains(where: { ($0.pageIndex == newItem.pageIndex) }) {
+            self.tupleColorBacground.insert(TuplePageColor(pageIndex: newItem.pageIndex, hexColor: extraColor), at: 0)
         }
     }
     
@@ -342,8 +325,6 @@ public class FMImageSlideViewController: UIViewController {
             } else {
                 if self.datasource.useURLs {
                     result.imageURL = self.datasource.selectImageURL(index: itemIndex)
-                    
-                    self.loadImage(forVC: result)
                 } else {
                     result.image = self.datasource.selectImage(index: itemIndex)
                 }
@@ -362,35 +343,7 @@ public class FMImageSlideViewController: UIViewController {
         
         return nil
     }
-    
-    private func loadImage(forVC vc: FMImagePreviewViewController) {
-        DispatchQueue.main.async {
-            if vc.slideStatus == .completed {
-                FMLoadingView.shared.show(inView: self.view)
-            }
-        }
-    
-        vc.image?.fm_setImage(url: vc.imageURL, completed: { (image, error, extraColor) in
-            if let image = image {
-                vc.update(image: image)
-                
-                self.setTupleColorBackgroundAndChangeBackgroundView(pageIndex: vc.itemIndex, hexColor: extraColor)
-            } else {
-                DispatchQueue.main.async {
-                    self.swipeInteractionController?.disable()
-                    
-                    FMAlert.shared.show(inView: self.view, message: "Whoops! Something went wrong.\nPlease try again!")
-                }
-            }
-            
-            DispatchQueue.main.async {
-                FMLoadingView.shared.hide()
-                
-                self.swipeInteractionController?.enable()
-            }
-        })
-    }
-    
+
     private func fadeOut(with duration: TimeInterval = Constants.AnimationDuration.defaultDuration) {
         guard let bottomView = self.bottomView, let topView = self.topView else {
             return
@@ -423,16 +376,14 @@ public class FMImageSlideViewController: UIViewController {
     
     private func getHex(by pageIndex: Int) -> String {
         if self.tupleColorBacground.isEmpty {
-            return Constants.Color.cBackgroundColor.hexString()!
+            return Constants.Color.cBackgroundColorHex
         }
         
-        for value in self.tupleColorBacground {
-            if value.pageIndex == pageIndex {
-                return value.hexColor
-            }
+        if let pageColor = self.tupleColorBacground.first(where: { $0.pageIndex == pageIndex}) {
+            return pageColor.hexColor ?? Constants.Color.cBackgroundColorHex
         }
         
-        return self.tupleColorBacground.first!.hexColor
+        return self.tupleColorBacground.last?.hexColor ?? Constants.Color.cBackgroundColorHex
     }
     
     private func getScrollDirection(scrollView: UIScrollView) -> ScrollDirection {
@@ -467,9 +418,7 @@ public class FMImageSlideViewController: UIViewController {
         
         if self.tupleColorBacground.contains(where: { ($0.pageIndex == toIndex) }) {
             let percent = percentComplete > 1 ? round(percentComplete) : percentComplete
-            
-            fadeColor = UIColor(hexString: self.getHex(by: self.currentPage), alpha: 1.0)
-                .fade(to: UIColor(hexString: self.getHex(by: toIndex), alpha: 1.0), withPercentage: percent)
+            fadeColor = fadeColor!.fade(to: UIColor(hexString: self.getHex(by: toIndex), alpha: 1.0), withPercentage: percent)
         }
         
         return fadeColor
@@ -489,11 +438,9 @@ extension FMImageSlideViewController: UIScrollViewDelegate {
         let percentComplete: CGFloat = fabs(point.x - self.pageViewController!.view.frame.size.width) / self.pageViewController!.view.frame.size.width
         
         let direction: ScrollDirection = self.getScrollDirection(scrollView: scrollView)
+                
+        self.view.backgroundColor = self.getFadeColor(direction: direction, percentComplete: percentComplete)
         
-        UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration) {
-            self.view.backgroundColor = self.getFadeColor(direction: direction, percentComplete: percentComplete)
-        }
-    
     }
 }
 
@@ -577,14 +524,14 @@ extension FMImageSlideViewController: ImageSlideFMDelegate {
     }
 }
 
-extension FMImageSlideViewController: RefreshProtocol {
-    func refreshHandling() {
-        DispatchQueue.main.async {
-            FMAlert.shared.hide()
-        }
-        
-        if let vc = self.pageViewController?.viewControllers?.first as? FMImagePreviewViewController {
-            self.loadImage(forVC: vc)
-        }
-    }
-}
+//extension FMImageSlideViewController: RefreshProtocol {
+//    func refreshHandling() {
+//        DispatchQueue.main.async {
+//            FMAlert.shared.hide()
+//        }
+//
+//        if let vc = self.pageViewController?.viewControllers?.first as? FMImagePreviewViewController {
+//            self.loadImage(forVC: vc)
+//        }
+//    }
+//}

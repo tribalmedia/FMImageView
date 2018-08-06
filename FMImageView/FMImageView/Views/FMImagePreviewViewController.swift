@@ -21,7 +21,7 @@ extension FMImagePreviewViewController: Move {
 class FMImagePreviewViewController: UIViewController {
     var itemIndex: Int = -1
     
-    var image: UIImage? = UIImage(withBackground: UIColor.clear)
+    var image: UIImage?
     
     var imageURL: URL?
     
@@ -46,7 +46,9 @@ class FMImagePreviewViewController: UIViewController {
         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         scrollView.backgroundColor = UIColor.clear
         scrollView._delegate = self
-
+        
+        FMAlert.shared.delegate = self
+        
         self.view = scrollView
         
         if let fromImage = self.image {
@@ -54,26 +56,27 @@ class FMImagePreviewViewController: UIViewController {
                 self.scrollView.displayImage(fromImage)
             }
             
-            if let extraColor = fromImage.averageColor {
-                guard let _ = self.parentVC?.view.backgroundColor else {
-                    if self.parentVC!.tupleColorBacground.count < self.parentVC!.datasource.total() {
-                        self.parentVC?.tupleColorBacground.append((pageIndex: self.itemIndex, hexColor: extraColor))
-                    }
-
-                    self.parentVC?.view.backgroundColor = UIColor(hexString: extraColor, alpha: 1.0)
-                    
-                    return
+            if let _ = self.parentVC?.config.backgroundColor { return }
+            if let _ = self.parentVC?.tupleColorBacground.first(where: { $0.pageIndex == self.parentVC!.config.initIndex }) { return }
+            
+            DispatchQueue.global(qos: .background).async {
+                DispatchQueue.main.async {
+                    fromImage.areaAverage(success: { (color) in
+                        if let extraColorHex = color.hexString() {
+                            self.parentVC?.tupleColorBacground.insert((pageIndex: self.itemIndex, hexColor: extraColorHex), at: 0)
+                            
+                            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
+                                self.parentVC?.view.backgroundColor = UIColor(hexString: extraColorHex, alpha: 1.0)
+                            })
+                        }
+                    })
                 }
             }
         } else {
-            self.scrollView.displayImage(self.image!)
+            let image = UIImage(withBackground: UIColor.clear)
+            scrollView.displayImage(image)
+            self.updateImage()
         }
-    }
-    
-    func update(image: UIImage?) {
-        guard let image = image else {return}
-        
-        self.scrollView.displayImage(image)
     }
     
     public func viewToSnapshot() -> UIView {
@@ -87,7 +90,46 @@ class FMImagePreviewViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         parentVC?.mDelegate = self
     }
-
+    
+    private func updateImage() {
+        guard let imageURL = self.imageURL else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.parentVC?.swipeInteractionController?.disable()
+            
+            FMLoadingView.shared.show(inView: self.parentVC?.view)
+        }
+        
+        ImageLoader.sharedLoader.imageForUrl(url: imageURL) { (image, urlString, error) in
+            if let _ = error {
+                DispatchQueue.main.async {
+                    FMAlert.shared.show(inView: self.parentVC?.view, message: "Whoops! Something went wrong.\nPlease try again!")
+                }
+            }
+            
+            if let image = image {
+                self.scrollView.displayImage(image)
+                
+                DispatchQueue.global(qos: .background).async {
+                    image.areaAverage(success: { (color) in
+                            if let extraColorHex = color.darker().hexString() {
+                                
+                                self.parentVC?.insertToTupleColorBackground(newItem: TuplePageColor(pageIndex: self.itemIndex, hexColor: extraColorHex))
+                            }
+                    })
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.parentVC?.swipeInteractionController?.enable()
+                
+                FMLoadingView.shared.hide()
+            }
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         DispatchQueue.main.async {
@@ -101,6 +143,16 @@ class FMImagePreviewViewController: UIViewController {
     }
     
 }
+
+extension FMImagePreviewViewController: RefreshProtocol {
+    func refreshHandling() {
+        DispatchQueue.main.async {
+            FMAlert.shared.hide()
+        }
+        updateImage()
+    }
+}
+
 
 extension FMImagePreviewViewController: ImagePreviewFMDelegate {
     func notificationHandlingModal(type: TypeName.Modal) {
