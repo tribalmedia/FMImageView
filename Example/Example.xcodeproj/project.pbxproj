@@ -18,6 +18,7 @@
 		AB5E53032112A14700F24D8A /* PhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E53002112A14700F24D8A /* PhotoGrid.swift */; };
 		ABAE8A8620EDBAE500383EEC /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE8A8520EDBAE500383EEC /* TableViewController.swift */; };
 		ABAE8A8A20EDBCF600383EEC /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE8A8920EDBCF600383EEC /* ImageCell.swift */; };
+		ABB852BA21182EB200CC3CA6 /* FMImageViewBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB852B921182EB200CC3CA6 /* FMImageViewBottomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		AB5E53002112A14700F24D8A /* PhotoGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGrid.swift; sourceTree = "<group>"; };
 		ABAE8A8520EDBAE500383EEC /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		ABAE8A8920EDBCF600383EEC /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		ABB852B921182EB200CC3CA6 /* FMImageViewBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMImageViewBottomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				096953A820B520C50057BFEE /* AppDelegate.swift */,
 				ABAE8A8520EDBAE500383EEC /* TableViewController.swift */,
 				ABAE8A8920EDBCF600383EEC /* ImageCell.swift */,
+				ABB852B921182EB200CC3CA6 /* FMImageViewBottomView.swift */,
 				096953AC20B520C50057BFEE /* Main.storyboard */,
 				096953AF20B520C80057BFEE /* Assets.xcassets */,
 				096953B120B520C80057BFEE /* LaunchScreen.storyboard */,
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB852BA21182EB200CC3CA6 /* FMImageViewBottomView.swift in Sources */,
 				ABAE8A8A20EDBCF600383EEC /* ImageCell.swift in Sources */,
 				ABAE8A8620EDBAE500383EEC /* TableViewController.swift in Sources */,
 				AB5E53032112A14700F24D8A /* PhotoGrid.swift in Sources */,
