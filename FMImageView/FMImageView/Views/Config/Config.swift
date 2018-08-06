@@ -11,6 +11,7 @@ import Foundation
 public struct Config {
     public var initImageView: UIImageView
     public var initIndex: Int
+    public var bottomView: HorizontalStackView?
     
     public init(initImageView: UIImageView, initIndex: Int) {
         self.initImageView = initImageView

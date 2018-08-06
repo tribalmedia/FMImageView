@@ -10,35 +10,59 @@ import Foundation
 
 public typealias FMTuple = (button: UIButton, label: UILabel)
 
-class HorizontalStackView: UIStackView {
+public class HorizontalStackView: UIStackView {
     var items: [FMTuple] = []
+    
+    var _view: UIView?
     
     var heightStackView: CGFloat = Constants.Layout.cHeightBV
     
-    init(items: [FMTuple]) {
-        self.items = items
-        
+    init() {
         super.init(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - heightStackView, width: UIScreen.main.bounds.width, height: heightStackView))
-        config()
     }
     
-    required init(coder: NSCoder) {
+    public convenience init(items: [FMTuple]) {
+        self.init()
+        self.items = items
+        config()
+        
+        addItemsToStackView()
+    }
+    
+    public convenience init(view: UIView) {
+        self.init()
+        self._view = view
+        config()
+        
+        addViewToStackView()
+    }
+    
+    
+    required public init(coder: NSCoder) {
         super.init(coder: coder)
         config()
     }
     
     private func config() {
-        if items.isEmpty {
-            return
-        }
         backgroundColor = .white
         alignment = .center
         distribution = .equalSpacing
         axis = .horizontal
         spacing = 0
         translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func addViewToStackView() {
+        guard let view = self._view else {
+            return
+        }
         
-        addItemsToStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        self.addArrangedSubview(view)
+        
+        view.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
     }
     
     private func addItemsToStackView() {

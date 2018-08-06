@@ -15,7 +15,6 @@ public class FMImageSlideViewController: UIViewController {
     // ***********************************************
     
     // public
-    public var subAreaBottomView: [FMTuple] = []
     public var didMoveToViewControllerHandler: ((Int) -> Void)?
     public var swipeInteractionController: FMPhotoInteractionAnimator?
     
@@ -188,9 +187,7 @@ public class FMImageSlideViewController: UIViewController {
     private func configSubviewViewController() {
         setupTopSubView()
         
-        if !self.subAreaBottomView.isEmpty {
-            setupBottomSubView()
-        }
+        setupBottomSubView()
     }
     
     private func setupTopSubView() {
@@ -236,10 +233,15 @@ public class FMImageSlideViewController: UIViewController {
     }
     
     private func setupBottomSubView() {
-        self.bottomView = HorizontalStackView(items: self.subAreaBottomView)
+        guard let bottomView = self.config.bottomView else {
+            return
+        }
         
+        self.bottomView = bottomView
         self.view.addSubview(self.bottomView!)
         
+        // setup layout
+        self.bottomView!.heightAnchor.constraint(equalToConstant: Constants.Layout.cHeightBV).isActive = true
         self.bottomView!.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         self.bottomView!.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         self.bottomConstraintStackView = self.bottomView!.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
