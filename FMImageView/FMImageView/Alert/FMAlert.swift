@@ -54,11 +54,11 @@ class FMAlert {
         __delegate?.refreshHandling()
     }
     
-    func show(message: String?) {
+    func show(inView: UIView?, message: String?) {
         self.messageLabel.text = message
         
         self.transparentView.removeFromSuperview()
-        UIApplication.shared.keyWindow?.addSubview(self.transparentView)
+        inView?.addSubview(self.transparentView)
         self.transparentView.alpha = 0
         UIView.animate(withDuration: 0.3, animations: {
             self.transparentView.alpha = 1

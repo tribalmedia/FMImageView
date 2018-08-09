@@ -8,31 +8,6 @@
 
 import UIKit
 
-extension UIView {
-    func snapshot() -> UIView {
-        if let contents = layer.contents {
-            var snapshotedView: UIView!
-            
-            if let view = self as? UIImageView {
-                snapshotedView = type(of: view).init(image: view.image)
-                snapshotedView.bounds = view.bounds
-            } else {
-                snapshotedView = UIView(frame: frame)
-                snapshotedView.layer.contents = contents
-                snapshotedView.layer.bounds = layer.bounds
-            }
-            snapshotedView.layer.cornerRadius = layer.cornerRadius
-            snapshotedView.layer.masksToBounds = layer.masksToBounds
-            snapshotedView.contentMode = contentMode
-            snapshotedView.transform = transform
-            
-            return snapshotedView
-        } else {
-            return snapshotView(afterScreenUpdates: true)!
-        }
-    }
-}
-
 public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     public var getOriginFrame: (() -> CGRect)!
     
@@ -51,15 +26,16 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
         
         let bgView = UIView(frame: containerView.frame)
         containerView.addSubview(bgView)
-        containerView.addSubview(snapshot)
         
         let originalSnapshotCornerRadius = snapshot.layer.cornerRadius
         let originalSnapshotSize = snapshot.frame.size
         
-        let startFrame = self.realDestinationFrame(scaledFrame: self.getOriginFrame(), realSize: snapshot.frame.size)
+        let startFrame = self.getOriginFrame()
         
         snapshot.layer.cornerRadius = 0
         snapshot.frame = startFrame
+        snapshot.contentMode = .scaleAspectFill
+        snapshot.clipsToBounds = true
         
         containerView.addSubview(toVC.view)
         containerView.addSubview(snapshot)
@@ -67,7 +43,7 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
         toVC.view.isHidden = true
         
         snapshot.alpha = 0
-        bgView.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        bgView.backgroundColor = toVC.view.backgroundColor
         bgView.alpha = 0
         
         let duration = transitionDuration(using: transitionContext)
@@ -86,7 +62,7 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
                                         snapshot.layer.cornerRadius = originalSnapshotCornerRadius
                                     }
                                     
-                                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+                                    UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.9) {
                                         bgView.alpha = 1
                                     }
         },
@@ -104,31 +80,6 @@ public class FMZoomInAnimationController: NSObject, UIViewControllerAnimatedTran
                                     }
                                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         })
-    }
-    
-    private func realDestinationFrame(scaledFrame: CGRect, realSize: CGSize) -> CGRect {
-        let scaledSize = scaledFrame.size
-        let ratio = realSize.width / realSize.height
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
-        var width: CGFloat = scaledSize.width
-        var height: CGFloat = scaledSize.height
-        
-        if ratio >= 1 {
-            let scaleRatio = scaledSize.height / realSize.height
-            width = realSize.width * scaleRatio
-            x = -(width - scaledSize.width) / 2
-        } else {
-            let scaleRatio = scaledSize.width / realSize.width
-            height = realSize.height * scaleRatio
-            y = -(height - scaledSize.height) / 2
-        }
-        
-        let frame = CGRect(x: scaledFrame.origin.x + x,
-                           y: scaledFrame.origin.y + y,
-                           width: width,
-                           height: height)
-        return frame
     }
 }
 

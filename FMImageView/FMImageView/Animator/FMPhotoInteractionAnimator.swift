@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  FMPhotoInteractionAnimator.swift
 //  FMImageView
 //
 //  Created by Hoang Trong Anh on 7/11/18.
@@ -8,44 +8,20 @@
 
 import UIKit
 
-extension FMPhotoInteractionAnimator:  UIViewControllerTransitioningDelegate{
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animationController = FMZoomInAnimationController()
-        animationController.getOriginFrame = self.getOriginFrameForTransition
-        return animationController
-    }
-    
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard let photoPresenterViewController = dismissed as? FMImageSlideViewController else { return nil }
-        let animationController = FMZoomOutAnimationController(interactionController: photoPresenterViewController.swipeInteractionController)
-        animationController.getDestFrame = self.getOriginFrameForTransition
-        return animationController
-    }
-    
-    public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        guard let animator = animator as? FMZoomOutAnimationController,
-            let interactionController = animator.interactionController,
-            interactionController.interactionInProgress
-            else {
-                return nil
-        }
-        
-        interactionController.animator = animator
-        return interactionController
-    }
-    
-    func getOriginFrameForTransition() -> CGRect {
-        return self.originFrameForTransition ?? CGRect.zero
-    }
-}
-
 public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTransitioning {
-    public var interactionInProgress = false
-
-    fileprivate var originFrameForTransition: CGRect?
     
+    // MARK: - Public
+    
+    public var interactionInProgress = false
+    public var animator: UIViewControllerAnimatedTransitioning?
+
+    // MARK: - Private
+    
+    private var destFrame: CGRect?
+    private var transitionContext: UIViewControllerContextTransitioning?
     private var shouldCompleteTransition = false
     private weak var viewController: FMImageSlideViewController!
+    fileprivate var originFrameForTransition: CGRect?
     lazy private var panGestureRecognizer: UIPanGestureRecognizer = {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         
@@ -55,8 +31,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
         return pan
     }()
     
-    private var transitionContext: UIViewControllerContextTransitioning?
-    public var animator: UIViewControllerAnimatedTransitioning?
+    // MARK: - Constructor
     
     init(viewController: FMImageSlideViewController, fromImageView: UIImageView) {
         super.init()
@@ -67,6 +42,8 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
         
         self.viewController.view.addGestureRecognizer(self.panGestureRecognizer)
     }
+    
+    // MARK: - Public functions
     
     public func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         self.transitionContext = transitionContext
@@ -80,18 +57,15 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
         self.panGestureRecognizer.isEnabled = false
     }
     
-    @objc func handleGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
-        let translation = gestureRecognizer.translation(in: gestureRecognizer.view!.superview!)
-        var progress = (translation.x / 200)
-        progress = CGFloat(fminf(fmaxf(Float(progress), 0.0), 1.0))
+    // MARK: - Private functions
+    
+    @objc private func handleGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
         
-        self.viewController.runDelegate(gestureRecognizer)
+         self.viewController.runDelegate(gestureRecognizer)
         
         if gestureRecognizer.state == .began {
             interactionInProgress = true
             viewController.dismiss(animated: true, completion: nil)
-        } else if gestureRecognizer.state == .changed {
-            
         } else {
             self.handlePanWithPanGestureRecognizer(gestureRecognizer,
                                                    viewToPan: self.viewController.pageViewController!.view,
@@ -100,7 +74,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
         }
     }
     
-    func handlePanWithPanGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer, viewToPan: UIView, anchorPoint: CGPoint) {
+    private func handlePanWithPanGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer, viewToPan: UIView, anchorPoint: CGPoint) {
         guard let fromView = transitionContext?.view(forKey: UITransitionContextViewKey.from) else {
             return
         }
@@ -112,7 +86,6 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
         let verticalDelta = newCenterPoint.y - anchorPoint.y
         let backgroundAlpha = backgroundAlphaForPanningWithVerticalDelta(verticalDelta)
         fromView.backgroundColor = fromView.backgroundColor?.withAlphaComponent(backgroundAlpha)
-//        self.viewController.view.alpha = CGFloat(backgroundAlpha)
         
         if gestureRecognizer.state == .ended {
             interactionInProgress = false
@@ -120,7 +93,7 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
         }
     }
     
-    func finishPanWithPanGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer, verticalDelta: CGFloat, viewToPan: UIView, anchorPoint: CGPoint) {
+    private func finishPanWithPanGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer, verticalDelta: CGFloat, viewToPan: UIView, anchorPoint: CGPoint) {
         guard let fromView = transitionContext?.view(forKey: UITransitionContextViewKey.from) else {
             return
         }
@@ -178,5 +151,41 @@ public class FMPhotoInteractionAnimator: NSObject, UIViewControllerInteractiveTr
     
     private func backgroundAlphaForPanningWithVerticalDelta(_ delta: CGFloat) -> CGFloat {
         return 1 - min(abs(delta) / 400, 1.0)
+    }
+}
+
+// MARK: - FMPhotoInteractionAnimator extension
+
+extension FMPhotoInteractionAnimator:  UIViewControllerTransitioningDelegate {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animationController = FMZoomInAnimationController()
+        animationController.getOriginFrame = self.getOriginFrameForTransition
+        return animationController
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let photoPresenterViewController = dismissed as? FMImageSlideViewController else { return nil }
+        let animationController = FMZoomOutAnimationController(interactionController: photoPresenterViewController.swipeInteractionController)
+        animationController.getDestFrame = self.getOriginFrameForTransition
+        return animationController
+    }
+    
+    public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        guard let animator = animator as? FMZoomOutAnimationController,
+            let interactionController = animator.interactionController,
+            interactionController.interactionInProgress
+            else {
+                return nil
+        }
+        
+        interactionController.animator = animator
+        return interactionController
+    }
+    
+    private func getOriginFrameForTransition() -> CGRect {
+        if let destFrame = self.viewController.getNewDestinatonFrame() {
+            return destFrame
+        }
+        return self.originFrameForTransition ?? CGRect.zero
     }
 }

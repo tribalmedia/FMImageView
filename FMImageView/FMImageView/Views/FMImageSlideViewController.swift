@@ -15,7 +15,8 @@ public class FMImageSlideViewController: UIViewController {
     // ***********************************************
     
     // public
-    public var subAreaBottomView: [FMTuple] = []
+    public var didMoveToViewControllerHandler: ((Int) -> Void)?
+    public var swipeInteractionController: FMPhotoInteractionAnimator?
     
     // internal
     var topView: UIView?
@@ -33,13 +34,13 @@ public class FMImageSlideViewController: UIViewController {
     weak var mDelegate: Move?
     
     // outlets
+    private var destinationFrame: CGRect?
     private var dismissButton: UIButton!
     private var numberImageLabel: UILabel!
     
     private var topConstrainTopView: NSLayoutConstraint?
     private var bottomConstraintStackView: NSLayoutConstraint?
     
-    public var swipeInteractionController: FMPhotoInteractionAnimator?
     
     // default init
     public init(config: Config) {
@@ -59,6 +60,8 @@ public class FMImageSlideViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = Constants.Color.cBackgroundColor
         
         // step 1
         self.configurePageViewController()
@@ -116,12 +119,23 @@ public class FMImageSlideViewController: UIViewController {
         }
     }
     
+    // MARK: Public functions
+    
+    public func setNewDestinatonFrame(imageView: UIImageView) {
+        let destFrame =  imageView.convert(imageView.bounds, to: self.view)
+        self.destinationFrame = destFrame
+    }
+    
+    public func getNewDestinatonFrame() -> CGRect? {
+        return self.destinationFrame
+    }
+    
     private func configurePageViewController() {
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [UIPageViewControllerOptionInterPageSpacingKey: 16.0])
         self.pageViewController!.dataSource = self
         self.pageViewController!.delegate = self
         
-        self.pageViewController?.view.backgroundColor = .black
+        self.pageViewController?.view.backgroundColor = .clear
         
         self.addChildViewController(self.pageViewController!)
         self.view.addSubview(pageViewController!.view)
@@ -173,9 +187,7 @@ public class FMImageSlideViewController: UIViewController {
     private func configSubviewViewController() {
         setupTopSubView()
         
-        if !self.subAreaBottomView.isEmpty {
-            setupBottomSubView()
-        }
+        setupBottomSubView()
     }
     
     private func setupTopSubView() {
@@ -209,21 +221,10 @@ public class FMImageSlideViewController: UIViewController {
     }
     
     func runDelegate(_ sender: UIPanGestureRecognizer) {
-        self.mDelegate?.moving(sender)
-        
         switch sender.state {
         case .began:
             self.handlingElasticityOfTopViewAndBottomView(type: .elasticity_out)
-        case .changed:
-            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
-                self.pageViewController?.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-            }, completion: { _ in
-                
-            })
         case .ended, .cancelled, .failed:
-            UIView.animate(withDuration: Constants.AnimationDuration.defaultDuration, animations: {
-                self.pageViewController?.view.backgroundColor = UIColor.black.withAlphaComponent(1)
-            })
             self.handlingElasticityOfTopViewAndBottomView(type: .elasticity_in)
         default:
             break
@@ -232,10 +233,15 @@ public class FMImageSlideViewController: UIViewController {
     }
     
     private func setupBottomSubView() {
-        self.bottomView = HorizontalStackView(items: self.subAreaBottomView)
+        guard let bottomView = self.config.bottomView else {
+            return
+        }
         
+        self.bottomView = bottomView
         self.view.addSubview(self.bottomView!)
         
+        // setup layout
+        self.bottomView!.heightAnchor.constraint(equalToConstant: Constants.Layout.cHeightBV).isActive = true
         self.bottomView!.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         self.bottomView!.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         self.bottomConstraintStackView = self.bottomView!.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
@@ -358,6 +364,7 @@ extension FMImageSlideViewController: UIPageViewControllerDelegate {
         if let vc = pageViewController.viewControllers?.first as? FMImagePreviewViewController {
             self.updateUINumberImageLabel(numerator: vc.itemIndex)
             vc.slideStatus = .completed
+            self.didMoveToViewControllerHandler?(vc.itemIndex)
         }
     }
     

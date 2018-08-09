@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,28 +21,47 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="109" id="pkQ-CB-K9I" customClass="ImageCell" customModule="Example" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="109"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="293" id="pkQ-CB-K9I" customClass="ImageCell" customModule="Example" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="293"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pkQ-CB-K9I" id="aIF-ON-7xJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="293"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gdw-00-HIk">
-                                            <rect key="frame" x="70" y="29" width="50" height="50"/>
+                                            <rect key="frame" x="48" y="31" width="88" height="88"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="VkA-bQ-R4p"/>
-                                                <constraint firstAttribute="width" constant="50" id="tCf-RW-nNb"/>
+                                                <constraint firstAttribute="width" constant="88" id="3rx-0v-Lhh"/>
+                                                <constraint firstAttribute="height" constant="88" id="PrK-cn-ASg"/>
                                             </constraints>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcS-Oi-xbn">
+                                            <rect key="frame" x="16" y="11" width="343" height="260"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="260" id="Ciy-mv-rVl"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="gdw-00-HIk" firstAttribute="top" secondItem="aIF-ON-7xJ" secondAttribute="topMargin" constant="18" id="2Zu-XJ-1wE"/>
-                                        <constraint firstItem="gdw-00-HIk" firstAttribute="leading" secondItem="aIF-ON-7xJ" secondAttribute="leadingMargin" constant="54" id="3M5-kk-Z0j"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="gdw-00-HIk" secondAttribute="bottom" constant="19" id="RSS-9B-tV9"/>
+                                        <constraint firstItem="wcS-Oi-xbn" firstAttribute="trailing" secondItem="aIF-ON-7xJ" secondAttribute="trailingMargin" id="5Qf-ea-gYx"/>
+                                        <constraint firstItem="wcS-Oi-xbn" firstAttribute="leading" secondItem="aIF-ON-7xJ" secondAttribute="leadingMargin" id="5X1-P3-Zcw"/>
+                                        <constraint firstItem="gdw-00-HIk" firstAttribute="leading" secondItem="aIF-ON-7xJ" secondAttribute="leadingMargin" constant="32" id="8od-Df-utR"/>
+                                        <constraint firstItem="wcS-Oi-xbn" firstAttribute="top" secondItem="aIF-ON-7xJ" secondAttribute="topMargin" id="LdJ-FN-5MH"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="wcS-Oi-xbn" secondAttribute="bottom" constant="11" id="Re7-pi-op1"/>
+                                        <constraint firstItem="gdw-00-HIk" firstAttribute="top" secondItem="aIF-ON-7xJ" secondAttribute="topMargin" constant="20" id="bjE-WM-eRB"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="gdw-00-HIk" secondAttribute="trailing" constant="223" id="f0L-Nn-Oqm"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="gdw-00-HIk" secondAttribute="bottom" constant="78" id="vAc-EV-b5q"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="gdw-00-HIk"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="photoGridHeightConstraint" destination="Ciy-mv-rVl" id="7TL-fu-M5v"/>
+                                    <outlet property="photoGridView" destination="wcS-Oi-xbn" id="sdt-Pv-31G"/>
                                     <outlet property="photoImageView" destination="gdw-00-HIk" id="dka-z7-ECB"/>
                                 </connections>
                             </tableViewCell>

@@ -47,6 +47,7 @@
 		09FD300D20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */; };
 		09FD301020F5DA6600DC132E /* FMZoomInAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */; };
 		09FD301220F5DA7A00DC132E /* FMZoomOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */; };
+		AB813DC1210EE59000031206 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB813DC0210EE59000031206 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		09FD300C20F5DA3E00DC132E /* FMPhotoInteractionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FMPhotoInteractionAnimator.swift; sourceTree = "<group>"; };
 		09FD300F20F5DA6600DC132E /* FMZoomInAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMZoomInAnimationController.swift; sourceTree = "<group>"; };
 		09FD301120F5DA7A00DC132E /* FMZoomOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMZoomOutAnimationController.swift; sourceTree = "<group>"; };
+		AB813DC0210EE59000031206 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 				09B0DCBD20E20F1500CB7DD3 /* CGPoint.swift */,
 				090BFEF320E3A30E00819FBF /* UIImage.swift */,
 				09906A1A20E60BFC00C06D69 /* UIPanGestureRecognizer.swift */,
+				AB813DC0210EE59000031206 /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				096953E720B52C290057BFEE /* Image+URL+Size.swift in Sources */,
 				09906A1B20E60BFC00C06D69 /* UIPanGestureRecognizer.swift in Sources */,
 				09B0DCBC20E20F0100CB7DD3 /* CGSize.swift in Sources */,
+				AB813DC1210EE59000031206 /* UIView.swift in Sources */,
 				090BFED520E36E2C00819FBF /* FMImagePreviewViewController.swift in Sources */,
 				09FD301020F5DA6600DC132E /* FMZoomInAnimationController.swift in Sources */,
 				09B0DCBE20E20F1500CB7DD3 /* CGPoint.swift in Sources */,
