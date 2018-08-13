@@ -5,19 +5,19 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-**FMImageView** is a slideshow and image viewer with zoom and interactive dismissal transition.
+**FMImageView** is a slideshow and image viewer with zoom and interactive dismissal transitions.
 
 <p align="center">
   <img height="400" src="resources/FMImageView.gif" />
 </p>
 
 ## Features
-- [x] Supports paginated image slideshow
-- [x] Supports double tap to zoom in/out
-- [x] Supports remote image loading and caching based
-- [x] Supports interactive transition animations
-- [x] Supports customize bottom view
-- [x] Supports customize configuration.
+- [x] Support image slideshow with pagination
+- [x] Support double tapping to zoom in/out
+- [x] Support remote image loader with caching
+- [x] Support the interactive transition animations
+- [x] Support custom bottom view
+- [x] Support custom configuration
 
 ## Requirements
 - iOS 9.0+
@@ -69,12 +69,12 @@ fmImageVC.didMoveToViewControllerHandler = { index in
 ```
 
 ## Configuration
-#### The configuration supports the following parameters:
+#### The configuration supports the following parameter:
 - [`bottomView`](#ref-bottom-view)
 
 #### Reference
 - <a name="ref-bottom-view"></a>`bottomView`   
-This will always show the bottom
+It will always show the bottom
 Type: `HorizontalStackView`  
 Default: `nil`
 Default height: `40.0`
