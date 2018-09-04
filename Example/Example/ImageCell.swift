@@ -17,10 +17,10 @@ class ImageCell: UITableViewCell {
     var presentFMImageView: ((_ index: Int, _ imageView: UIImageView, _ photoURLs: [URL]) -> Void)?
     
     var photoGrid = PhotoGridView(frame: CGRect.zero)
-    private var photoUrl: [URL] = [URL(string: "https://media.funmee.jp/medias/6a6bdd8326c225b806021f39e19ed97b1cff8cc5/large.jpg")!,
-                                   URL(string: "https://media.funmee.jp/medias/abbdda21d9c5859871bb88b521f6b4d2ab41601a/large.jpg")!,
-                                   URL(string: "https://media.funmee.jp/medias/2833d8826ab34e3b9304b62bd3b4bda0164f8004/large.JPG")!,
-                                   URL(string: "https://media.funmee.jp/medias/c455f72e904fbe0b22f44084c785f63a5367a54d/large.jpg")!]
+    private var photoUrl: [URL] = [URL(string: "https://cdn.stocksnap.io/img-thumbs/960w/LHOLK9MS1O.jpg")!,
+                                   URL(string: "https://cdn.stocksnap.io/img-thumbs/960w/FAOI1VDJBI.jpg")!,
+                                   URL(string: "https://cdn.stocksnap.io/img-thumbs/960w/L4B2YC09F2.jpg")!,
+                                   URL(string: "https://cdn.stocksnap.io/img-thumbs/960w/GHR0BY9GIJ.jpg")!]
     
     override func awakeFromNib() {
         super.awakeFromNib()
